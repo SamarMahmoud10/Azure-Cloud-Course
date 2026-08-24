@@ -1,0 +1,42 @@
+## Video 2: Deploy and Configure Web Apps
+
+### 📌 Overview
+Learning how to deploy, access, configure, and troubleshoot **Azure Web Apps** via the Azure Portal, with a focus on environment variables and diagnostics.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. Azure Web Apps Fundamentals
+* **Definition**: A PaaS solution to host websites and REST APIs without managing infrastructure.
+* **Use Cases**: Ideal for e-commerce platforms, customer portals, and corporate websites.
+* **Default Access**: Every deployed Web App receives a unique default URL/domain instantly.
+
+#### 2. Deployment Requirements
+* **Runtime Stack**: You must select your application's language and version (e.g., .NET, Python, Node.js, Java).
+* **OS Constraints**: The underlying App Service Plan must match the runtime requirements (e.g., Python/Node.js usually require **Linux**, while certain .NET apps need **Windows**).
+
+#### 3. Code Deployment Methods
+* **Manual / Quick Options**: ZIP packages and FTP (best for small teams, quick rollouts, or marketing campaigns).
+* **Source Control / Automated**: GitHub, Bitbucket, local Git, or **Azure DevOps** (best for enterprise projects using automated CI/CD pipelines).
+
+#### 4. App Configuration & Environment Variables
+* **Runtime Settings**: Easily adjust the stack version and platform settings anytime without code changes.
+* **Environment Variables**: Securely inject configuration settings at runtime. They are divided into two main types:
+  * **App Settings**: Key-value pairs used for API keys, custom configs, and feature toggles (exposed to code as standard environment variables).
+  * **Connection Strings**: Specialized variables optimized for database connections, heavily integrated with frameworks like .NET for automatic mapping.
+
+#### 5. Web App Diagnostics & Logging
+* **Log Types**: Supports application logs, web server logs, and detailed request logs.
+* **Troubleshooting**: Helps identify the root cause of issues (like slow performance or errors) without altering application code.
+* **Storage Options**: Logs can be streamed live, saved to **Azure Storage**, or sent to **Application Insights** for advanced analytics.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Environment Variables Analogy**: 
+  Think of your application code as a **pre-printed form**, and environment variables as the **blanks filled out in pencil**. Instead of reprinting the whole form (redeploying code) just to change a phone number or database path, you just erase the pencil mark and write the new value in the Azure Portal. The application reads it instantly.
+
+* **Separation of Settings**: 
+  Never hardcode your database passwords (`DB_CONNECTIONSTRING`) or API keys inside your GitHub repository. Always place them inside Azure's **App Settings**, keeping your code safe, clean, and secure.

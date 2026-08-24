@@ -1,0 +1,50 @@
+## Video 3: Triggers and Bindings Fundamentals
+
+### 📌 Overview
+Deep dive into how **Triggers** and **Bindings** (Input & Output) extend Azure Functions, eliminating boilerplate connectivity code and enabling seamless cloud data workflows.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. What are Triggers? (The "When")
+* **Definition**: A trigger defines **how** and **when** a function is invoked/started. 
+* **The Golden Rule**: Each Azure Function **must have exactly one trigger**.
+* **Common Trigger Types**:
+  * **HTTP Trigger**: Executes via web APIs or webhooks.
+  * **Timer Trigger**: Executes on a recurring schedule (e.g., daily at 12:00 AM) for cleanups or reports.
+  * **Queue Trigger**: Executes asynchronously as soon as a new message arrives in a storage queue.
+  * **Blob Trigger**: Executes automatically the millisecond a new file (image, video, log) is uploaded to a storage container.
+
+#### 2. What are Bindings? (The "What")
+* **Definition**: A declarative way of connecting external data resources to your function without writing complex connection strings, SDK initializations, or "plumbing" code.
+* **How it helps**: Azure handles the underlying connection behind the scenes. Your code stays clean and entirely focused on business logic.
+
+#### 3. Input vs. Output Bindings
+* **Input Bindings (Data In)**: Passes external data directly into your function as an input parameter (e.g., automatically pulling a specific customer record from Cosmos DB when the function starts).
+* **Output Bindings (Data Out)**: Takes the return value or result of your function and delivers it automatically to an external service (e.g., saving data to a database or sending an email). A single function can have **multiple output bindings** executing simultaneously.
+
+---
+
+### 🔀 Real-World Workflow Example (The Invoice Pipeline)
+
+Imagine a complex cloud workflow built with zero infrastructure management code:
+1. **The Trigger**: A client uploads an invoice PDF $\rightarrow$ fires a **Blob Trigger**.
+2. **The Input Binding**: Automatically reads the contents of that uploaded file and hands it to the code as a simple variable.
+3. **The Code**: Processes the text, extracts the totals, and calculates taxes.
+4. **The Output Bindings**: Simultaneously fires two actions:
+   * Saves the text metadata directly into **Azure Cosmos DB**.
+   * Sends an automated confirmation notification to the finance team via **Slack/Email**.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Trigger & Binding Analogy**: 
+  Imagine you are running a **Smart Juice Factory**:
+  * **The Trigger** is a **motion sensor** at the door. When a basket of oranges rolls in, the blender automatically turns on. (Exactly one trigger starts the machine).
+  * **The Input Binding** is an **automated conveyor belt** that grabs the oranges and drops them right inside the blender container so the blades can reach them instantly. (No human needs to manually fetch them).
+  * **The Output Binding** is a **split pipe system** at the bottom. Once the juice is ready, one pipe automatically pours it into a bottle (Database), while another pipe squirts a label onto the box (Email Notification).
+
+* **Why Developers Love Bindings**: 
+  In traditional programming, to save data to a database, you must write code to import a database library, create a connection client, open the connection, handle authentication keys, execute a query, and manually close the connection. With Azure Output Bindings, you just write `return myData;` and Azure pushes it to the database automatically.

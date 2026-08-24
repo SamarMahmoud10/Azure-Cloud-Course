@@ -1,0 +1,36 @@
+## Video 3: Run from Package and Startup Commands
+
+### 📌 Overview
+Step-by-step guide to configuring an Azure Web App to run its application content directly from a hosted ZIP deployment package in Azure Blob Storage, along with configuring custom startup behaviors.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. Running Apps from a Deployment Package
+* **Concept**: Instead of extracting your application files directly into the Web App's file system, the Web App mounts and runs the application directly from a single **ZIP file** hosted in cloud storage.
+* **Key Setting**: Controlled by adding a specific Application Setting named `WEBSITE_RUN_FROM_PACKAGE`.
+* **Benefits**: 
+  * Atomic deployments (all files update at the exact same instant).
+  * Fast cold-start times.
+  * Locks the files as read-only, preventing accidental modifications or security tempering.
+
+#### 2. The Deployment Workflow (Step-by-Step)
+1. **Locate the Package**: Go to your **Azure Storage Account** -> **Containers**, and select your application's `.zip` file.
+2. **Secure the File (SAS)**: Generate a **Shared Access Signature (SAS) URL** with strictly **Read** permissions and set a reasonable expiration time.
+3. **Link to Web App**: Copy the full SAS URL, go to your Web App's **Configuration**, create the `WEBSITE_RUN_FROM_PACKAGE` setting, and paste the URL as its value.
+4. **Apply**: Save the configurations and restart the Web App.
+
+#### 3. Custom Startup Commands
+* **Definition**: A setting under **General Settings** that allows developers to define a custom script or boot command executed right when the Web App container spins up.
+* **Use Case**: Crucial for **Linux-based applications** that require specific initialization steps, custom arguments, or custom environment staging before starting the web server.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The "Run from Package" Analogy**: 
+  Think of traditional deployment as buying a puzzle, opening the box, and scattering all the pieces on the table (extracting files to the server). Running from a package is like buying the puzzle **already fully assembled and framed**. Azure doesn't have to look through individual files; it just takes the single frame (the ZIP file) and displays it immediately. 
+
+* **What is a SAS URL? (Very Important)**: 
+  A SAS (Shared Access Signature) URL is like a **temporary digital keycard**. Your ZIP file in Blob Storage is private and locked from the public. By generating a SAS URL with "Read" access, you are giving your Web App a secret keycard so it can open the file and read it, without making the file open to the whole world.

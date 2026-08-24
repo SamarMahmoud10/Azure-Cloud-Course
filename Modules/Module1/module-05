@@ -1,0 +1,51 @@
+# Module 2: Azure Functions & Serverless Architecture
+
+## Video 1: Introduction to Azure Functions & Hosting Plans
+
+### 📌 Overview
+Introduction to the concepts of Serverless Computing in Azure, exploring the differences between Web Apps and **Azure Functions**, analyzing hosting options, and understanding function orchestration.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. Web Apps vs. Function Apps
+* **Web Apps**: Designed for **Long-running, Stateful** applications. They remain active constantly and remember user state or data sessions between interactions.
+* **Function Apps**: Designed for **Short-lived, Stateless, Event-driven** execution. They spin up instantly to do a single job and shut down immediately after, processing every request independently.
+
+#### 2. What are Azure Functions? (Serverless)
+* **Definition**: A serverless compute service that lets you run pieces of code without provisioning, managing, or paying for underlying infrastructure or idle servers.
+* **Driven by Triggers**: They react instantly to events like an HTTP web request, a timer schedule (Cron job), or a message uploaded to a queue/storage bucket.
+* **Integrations**: Connects natively with other services like Azure Blob Storage, Event Grid, and Service Bus.
+
+#### 3. Architecture Hierarchy
+* **Function App (The Container)**: This is the execution environment and parent container. It holds one or more functions. All functions inside a single Function App **share the same configuration, runtime language, and hardware resources**.
+* **Function (The Code)**: The actual individual block of code that performs a specific action (e.g., one function to process an order, another to send a confirmation email).
+
+#### 4. Hosting Plans & Scaling
+* **Consumption Plan (True Serverless)**:
+  * Scales automatically to handle traffic spikes.
+  * **Billing**: You only pay for the exact seconds your code runs. Zero cost when idle.
+  * *Trade-off*: Suffers from **Cold Starts** (latency delay when the app has to wake up after being idle).
+* **Premium Plan**:
+  * Keeps instances pre-warmed and ready to execute immediately.
+  * Eliminates cold-start delays. Ideal for high-volume or marketing campaigns.
+* **Dedicated Plan (App Service Plan)**:
+  * Runs your functions on fixed, dedicated virtual servers.
+  * You pay a fixed monthly rate regardless of usage. Best for constant, predictable enterprise workloads.
+
+#### 5. Testing & Monitoring
+* **Endpoints**: Every function gets its own unique HTTP URL endpoint to be tested via browsers or tools like Postman.
+* **Metrics**: Built-in monitoring tracks execution count, success rates, duration, and runtime failures.
+* **Advanced Telemetry**: Integrates with **Application Insights** for live distributed tracing and code bottleneck diagnostics.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Web App vs. Azure Function Analogy**: 
+  Think of a **Web App** as a **Physical Restaurant** that is open 24/7. You must pay rent, electricity, and salaries all month long, whether you have 1 customer or 1,000. 
+  An **Azure Function** is like a **Catering Truck** that only turns on its engine and drives out when someone places a specific phone call (a Trigger). It does the job, delivers the food, and immediately turns off the engine. You only pay for the gas used during that specific delivery trip.
+
+* **What is a "Cold Start"? (Interview Question)**: 
+  Under the *Consumption Plan*, if no one calls your function for an hour, Azure tears down the underlying server to save resources. When a new user suddenly hits the function URL, Azure has to quickly find a server, boot up the environment, and load your code. This initial delay (a few seconds) is called a **Cold Start**. If your system cannot tolerate this delay, you must upgrade to the **Premium Plan** which keeps the server "warmed up" at all times.

@@ -1,0 +1,52 @@
+# Module 1: Developing Azure Compute Solutions
+
+## Video 1: Introduction to Azure App Service
+
+### 📌 Overview
+Introduction to Azure Compute Services with a deep dive into **Azure App Service** fundamentals, configuration, deployment options, and core hosting concepts.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. Cloud Compute Services
+* **Definition**: Cloud components that allow you to run code, applications, and workloads in the cloud.
+* **Core Components**: Virtual Machines (VMs), Containers, and App Services.
+
+#### 2. Azure App Service
+* **Definition**: A fully managed, HTTP-based cloud platform (PaaS) designed for hosting web applications, REST APIs, and mobile back-ends.
+* **Key Features**: 
+  * Supports multiple languages and frameworks (.NET, Java, Node.js, Python, PHP, etc.).
+  * High availability and built-in security.
+  * Automatic scaling capabilities.
+  * No server management required (Focus entirely on code).
+
+#### 3. App Service Plans (The Engine)
+* **Definition**: The underlying compute resources (Virtual Server) allocated to run your hosted applications.
+* **Characteristics**:
+  * Defines the CPU, memory, storage, and scaling limits.
+  * **Pricing Model**: You pay for the *App Service Plan* (the hardware footprint), regardless of how many apps you run inside it.
+  * **Tiers**: Ranges from **Free/Shared** (for testing/dev) to **Premium/Isolated** (for high-performance enterprise production).
+
+#### 4. Deployment & DevOps
+* **Methods**: Azure Portal (GUI), Azure CLI (Automation), or direct IDE integration (Visual Studio).
+* **CI/CD Integration**: Supports continuous deployment via GitHub, Bitbucket, and Azure DevOps.
+* **Deployment Slots**: 
+  * Staging environments with their own live URLs.
+  * Allows testing new code before swapping to production.
+  * Enables **zero-downtime** deployments and easy rollbacks.
+
+#### 5. Security & Compliance
+* **RBAC**: Role-Based Access Control to manage user permissions.
+* **Secrets Management**: Direct integration with **Azure Key Vault** to secure API keys and strings.
+* **Network Isolation**: Supports IP restrictions and private endpoints.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The App Service vs. App Service Plan Analogy**: 
+  Think of the **App Service Plan** as a **physical apartment building** you are renting, and the **App Services** as the **rooms/tenants** inside it. You pay a fixed monthly rent for the entire building (the Plan). You can put one app or ten apps inside it; they will all share the building's total electricity and water (CPU and RAM). If your apps need more space, you must upgrade the entire building (Scale up the Plan).
+
+* **Why Deployment Slots matter**: 
+  Instead of changing code live on your main website and risking crashes, slots let you build a "mirror" website behind the scenes. Once verified, Azure simply "swaps" the traffic instantly with zero disruption to the user.

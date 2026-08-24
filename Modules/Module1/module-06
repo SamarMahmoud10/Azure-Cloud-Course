@@ -1,0 +1,42 @@
+## Video 2: Creating and Testing HTTP-Triggered Azure Functions
+
+### 📌 Overview
+Hands-on workflow for creating, deploying, testing, and tracking an **HTTP-Triggered Azure Function** directly through the Azure Portal, including understanding authorization levels and execution logs.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. What is an HTTP Trigger?
+* **Definition**: A type of Azure Function that executes its code immediately in response to an incoming HTTP request (e.g., clicking a link, submitting a web form, or calling an API endpoint).
+* **Output**: It automatically generates a unique web URL/endpoint that can be accessed externally.
+
+#### 2. Authorization Levels (Function Level)
+* When creating an HTTP function, you must set an authorization level to control access security.
+* **Function Level**: Requires a specific secret API key (Function Key) to be appended to the URL. Without this key, external users cannot trigger or execute your code.
+
+#### 3. Development & Testing Workflow (In-Portal)
+1. **Creation**: Inside your Function App -> Go to **Functions** -> Click **Create** -> Select the **HTTP trigger** template.
+2. **In-Portal Testing**: Open the **Code + Test** tab -> click **Test/Run** -> execute the function and view the immediate HTTP response body and status code.
+3. **External Testing**: Click **Get Function URL** -> copy the complete link (which includes the security token) -> paste it into a web browser or API tool like Postman. Every page refresh triggers a fresh execution.
+
+#### 4. Real-Time Monitoring & Execution Logs
+* **Log Streaming**: The Azure Portal provides a live console window that streams code execution logs in real-time.
+* **Invocation History**: Every single time the function URL is hit, Azure records a new entry showing:
+  * Timestamp of execution.
+  * Success/Failure status.
+  * Custom log messages written inside the code.
+* **Use Case**: Critical for rapid debugging, verifying traffic, and troubleshooting runtime behaviors.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The HTTP Trigger Analogy**: 
+  Think of an HTTP-Triggered function as a **Smart Doorbell** at your house. 
+  * The **URL** is the physical button on the street. 
+  * The **Authorization Key** is like requiring the guest to know a secret password before they are allowed to press the button. 
+  * The moment someone presses it (sends an HTTP request), the chime rings inside (the code executes instantly). If they just stand there without pressing it (no traffic), no electricity or energy is wasted.
+
+* **Security Best Practice**: 
+  When testing in a browser, never share your full "Function URL" publicly, because it contains your secret authorization token (`?code=...`). If someone gets hold of it, they can abuse your endpoint, trigger your function repeatedly, and consume your Azure subscription budget.
