@@ -1,0 +1,39 @@
+## Video 2: Azure Container Registry (ACR) & Image Lifecycle
+
+### 📌 Overview
+Deep dive into **Azure Container Registry (ACR)** as a fully managed, enterprise-grade private registry. This covers integration with Entra ID, geo-replication, image versioning, and automated lifecycle building via ACR Tasks.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. What is Azure Container Registry (ACR)?
+* **Definition**: A private, fully managed cloud library used to securely store, manage, and distribute your private Docker container images.
+* **The Cloud Difference**: Unlike public Docker Hub, ACR restricts access strictly to authorized corporate users and integrates natively with all Azure compute resources.
+
+#### 2. Why Enterprises Choose ACR
+* **Integrated Authentication**: Connects directly with **Microsoft Entra ID** and enforces fine-grained **RBAC** roles (e.g., `AcrPush` for CI/CD developers to upload, and `AcrPull` for Web Apps/Functions to download).
+* **Geo-Replication (Premium Tier)**: Automatically mirrors/replicates your container images across multiple global Azure regions.
+  * *Benefit*: If you deploy your app in Europe and Asia, servers pull the image from the nearest local data center, drastically minimizing network latency and providing disaster high availability.
+
+#### 3. The DevOps & CI/CD Pipeline Flow
+1. **Local Build**: A developer writes code and builds an image locally via Docker (`docker build`).
+2. **Authentication**: Log in securely to Azure registry via the Azure CLI (`az acr login`).
+3. **Push to Cloud**: Push the tagged image up to ACR (`docker push`).
+4. **Automated Deployment**: Tools like GitHub Actions or Azure DevOps detect the new image in ACR and immediately trigger a deployment to Azure Web Apps or Kubernetes.
+
+#### 4. Image Management & ACR Tasks
+* **Tagging & Versioning**: Using clear naming strategies to distinguish builds (e.g., `myapp:v1.0` vs. `myapp:latest`). Proper tags guarantee instant rollback safety if a production update fails.
+* **ACR Tasks (Automation)**: A powerful feature that can automatically monitor base OS images. If Microsoft updates the underlying Linux base image for security patches, ACR Tasks can automatically rebuild your application container image without human developer intervention.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Architectural Blueprint Vault Analogy**: 
+  Think of your application code as raw concrete and bricks, and the Docker Image as a **fully completed, locked blueprint of a modular room**. 
+  * **Docker Hub** is like posting your blueprint on a public library bulletin board where anyone can copy it.
+  * **Azure Container Registry (ACR)** is like storing that blueprint inside your **company's private, bulletproof vault**. The vault has biometric scanners (Entra ID / RBAC). When the construction crane (Azure Web App) needs to build a new room, it scans its badge (Managed Identity), opens the vault, reads the blueprint, and builds the container instantly on the cloud.
+
+* **Best Practice Reminder**: 
+  Always use explicit version tags like `:v1.1.2` in your production environments instead of blindly relying on `:latest`. If you use `:latest`, your cloud servers might pull a half-tested, broken image automatically during an autoscale event, causing a production crash.
