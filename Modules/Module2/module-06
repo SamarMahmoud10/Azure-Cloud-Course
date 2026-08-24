@@ -1,0 +1,46 @@
+## Video 6: Deploying Applications on AKS & Service Exposure Tiers
+
+### 📌 Overview
+Practical guide on how AKS transforms container images into active, resilient **Pods**, exploring the role of **Kubernetes Deployments** in self-healing, and understanding **Kubernetes Services** for internal and external traffic routing.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. The Declarative Lifecycle (Intent over Manual Actions)
+* In AKS, you never deploy or manage individual containers directly. Instead, you declare your **Intent** in a manifest file (YAML).
+* You define high-level behaviors: which image to pull, how many instances (replicas) to run, and how they should recover. Kubernetes handles the heavy infrastructure coordination entirely.
+
+#### 2. From Registry Image to Live Pods
+1. **The Trigger**: You apply a deployment manifest (`kubectl apply`).
+2. **The Pull**: AKS securely connects to your registry (like **Azure Container Registry - ACR**) and pulls the specified Docker image.
+3. **The Scheduling**: Kubernetes analyzes the cluster and automatically assigns (schedules) the required **Pods** onto the available **Worker Nodes** with the most free RAM/CPU.
+4. **High Availability**: If you request multiple replicas, Kubernetes intelligently spreads the Pods across *different* nodes, ensuring that if one physical server crashes, your application stays online.
+
+#### 3. Self-Healing via Deployments
+* A Kubernetes **Deployment** acts as a permanent guardian for your Pods.
+* **Automated Recovery**: If a container crashes, a Pod runs out of memory, or an entire Azure Node goes dark, the Deployment Controller instantly detects the deviation from the "Desired State" and automatically recreates a fresh Pod on a healthy node. No human interaction or server restarts required.
+
+#### 4. Exposing Apps via Kubernetes Services
+By default, Pods are internal, volatile, and change their IP addresses every time they restart. To solve this networking challenge, Kubernetes introduces **Services**:
+* **The Concept**: A Service provides a single, permanent, static IP address/endpoint that acts as a gateway to route incoming traffic safely to the underlying dynamic Pods.
+* **Core Service Types in AKS**:
+  * **Internal Service (ClusterIP)**: Exposes the app *only* inside the cluster. Perfect for private microservices (like a backend API or a database) that should never be reached by the public internet.
+  * **External Service (LoadBalancer)**: Automatically communicates with Azure's cloud infrastructure to provision a real, public **Azure Load Balancer** with a dedicated public IP address, routing global user traffic from the internet directly into your cluster's healthy Pods.
+
+#### 5. Auditing and Verifying Health
+* Instead of checking separate Linux container runtimes, cloud engineers audit the health of higher-level resources (`kubectl get deployments`, `kubectl get pods`, `kubectl get services`).
+* This provides instant visibility into whether workloads are healthy, actively restarting, or still pulling images.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Pod vs. Service Analogy (The Phone Extension)**: 
+  Imagine a major corporate call center (The Cluster):
+  * The **Pods** are the individual customer service agents. Agents take breaks, quit, or get sick, and new agents are hired to replace them (Pods are ephemeral and change constantly).
+  * If clients called the agents' personal mobile numbers directly, the system would collapse the moment an agent shifts roles.
+  * The **Kubernetes Service** is like the **Main Corporate Hotline Number (19XXX)**. Clients only dial this one permanent number. The automatic switchboard (The Service) doesn't care which specific agent answers the phone; it simply routes the call instantly to any available, healthy agent sitting at a desk.
+
+* **Architectural Safety Rule**: 
+  Never expose your Pods directly to the internet without a Service. Services act as the fundamental load balancers that buffer your code from traffic spikes and prevent external users from breaking connectivity when Pods self-heal or scale out.

@@ -1,0 +1,46 @@
+## Video 7: Application Configuration in AKS - ConfigMaps and Secrets
+
+### 📌 Overview
+Understanding how Kubernetes separates application source code from configuration parameters to maintain reusable container images across environments, exploring **ConfigMaps** for public settings and **Secrets** for sensitive data.
+
+---
+
+### 🌟 Key Takeaways
+
+#### 1. The Core Rule: Separation of Concerns
+* Rebuilding or recompiling Docker container images every time a database URL or a feature flag changes is highly inefficient and creates configuration errors.
+* **The Solution**: Kubernetes forces a strict separation between your application code (the Docker image) and its environment configuration. The image remains 100% identical and reusable across Dev, Staging, and Production tiers, while settings are injected externally.
+
+#### 2. Environment Variables (The Baseline)
+* The simplest method to pass values into a containerized application.
+* These key-value pairs are injected into the container at boot time.
+* **Typical Use Case**: Defining non-sensitive environment names (e.g., `ENV=Production`), adjusting framework log levels (e.g., `LOG_LEVEL=Debug`), or setting external public API endpoints.
+
+#### 3. Kubernetes ConfigMaps (Public Configurations)
+* **Definition**: A specialized Kubernetes resource object used to store non-sensitive configuration data in key-value pairs or text files.
+* **How it is Consumed**: Pods can read ConfigMaps in two ways:
+  1. Injected as standard **Environment Variables**.
+  2. Mounted as real physical **Configuration Files** inside the container’s file system (e.g., injecting an `appsettings.json` or `nginx.conf` file).
+* **The Advantage**: You can update a database endpoint or toggle a marketing feature flag in the ConfigMap without touching or redeploying your underlying container code. Multiple apps can share the same ConfigMap to maintain infrastructure consistency.
+
+#### 4. Kubernetes Secrets (Sensitive Configurations)
+* **Definition**: An object structurally similar to a ConfigMap, but specifically engineered to hold sensitive enterprise information.
+* **Typical Use Case**: Storing production database connection strings, payment gateway API keys, and SSL certificates.
+* **Security Layer**: Secrets are stored with an extra layer of protection within the cluster's management database (`etcd`). They prevent credentials from being baked into the Docker image or accidentally pushed to public GitHub code repositories. Pods consume them securely as variables or files at runtime.
+
+#### 5. Seamless Dynamic Updates
+* Because configuration objects (ConfigMaps & Secrets) exist independently of application code, operations teams can patch configurations on the fly. 
+* New or restarted pods automatically pick up the newest structural changes, making cloud updates highly predictable, fast, and secure.
+
+---
+
+### 💡 Analogy & Study Notes
+
+* **The Video Game Console Analogy**: 
+  Think of your container image as a **PlayStation Console** (The Hardware and Core Code). 
+  * If you hardcode your settings inside the image, it's like gluing a specific game disk inside the console forever. To play a new game (change an environment), you would have to throw away the whole console and buy a new one (Rebuild the Docker image).
+  * **ConfigMaps** are like **Standard Game Memory Cards** 💾 holding your public game saves, controls settings, and user language preferences. You can swap memory cards or edit the settings instantly without changing the PlayStation hardware.
+  * **Kubernetes Secrets** are like the **Encrypted Credit Card & Account Passwords** linked to your online profile. They are kept in a hidden, secure vault layer of the system; the console reads them safely when making a purchase, but they are never written or printed on the console box itself.
+
+* **Key Connection to Azure**: 
+  While raw Kubernetes has its own built-in `Secrets` mechanism, in mature cloud production environments, enterprise teams often connect AKS directly to **Azure Key Vault** using a plugin (like the Secrets Store CSI Driver). This allows Kubernetes to fetch its Secrets directly from your secure cloud Key Vault, combining the best of Kubernetes orchestration with Azure's ironclad enterprise security!
