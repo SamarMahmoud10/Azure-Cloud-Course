@@ -1,0 +1,122 @@
+# Module 3: Microservices, Containers & Cloud Integration
+
+## Video 8: Scaling Applications in AKS
+
+### 📌 Overview
+This guide explains how to scale applications inside Azure Kubernetes Service (AKS). Applications face changing traffic loads throughout the day. Scaling ensures your application remains responsive during high-traffic spikes and saves costs during quiet hours.
+
+---
+
+### 1. Types of Scaling in AKS
+Kubernetes and AKS offer three main levels of scaling:
+* **Manual Scaling**: Manually changing the number of running instances (replicas).
+* **Horizontal Pod Autoscaler (HPA)**: Automatically adding or removing **Pods** based on resource demand (CPU/Memory).
+* **Cluster Autoscaler**: Automatically adding or removing **Virtual Machines (Nodes)** when Pods run out of physical space.
+
+---
+
+### 2. Manual Scaling
+Best used for **predictable events** (e.g., planned product launches, marketing promotions, or seasonal sales).
+
+#### 💻 Kubectl Command Example:
+```bash
+# Scale your deployment manually from 2 replicas to 4 replicas
+kubectl scale deployment my-web-app --replicas=4
+```
+
+#### 📝 Code Representation (Deployment YAML):
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+spec:
+  replicas: 4 # <-- [COMMENT] Change this number manually to scale up or down
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web-container
+        image: myregistry.azurecr.io/web-app:v1
+        resources: # <-- [COMMENT] Always define resources so scaling works accurately
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+```
+
+---
+
+### 3. Horizontal Pod Autoscaler (HPA)
+Best used for **dynamic, unpredictable traffic**. It monitors your Pods and automatically handles the workload.
+
+* **High Traffic**: If CPU/Memory usage goes above your defined threshold, HPA creates **more Pods**.
+* **Low Traffic**: If demand drops, HPA removes the extra Pods to save resources.
+* **Azure Integration**: In AKS, HPA can connect with **Azure Monitor** to scale based on custom metrics like HTTP request latency or message queue length.
+
+#### 📝 Configuration Example (HPA YAML):
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-web-app # <-- [COMMENT] Points to the deployment we want to scale automatically
+  minReplicas: 2     # <-- [COMMENT] The minimum number of pods to keep running (saves minimum cost)
+  maxReplicas: 10    # <-- [COMMENT] The maximum number of pods allowed during high traffic spikes
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70 # <-- [COMMENT] If average CPU usage exceeds 70%, HPA creates new pods automatically
+```
+
+---
+
+### 4. Cluster Autoscaler
+Scaling Pods only works if your physical servers (Nodes) have enough space. If the Cluster runs out of CPU/Memory, new Pods will remain stuck in a `Pending` state.
+
+* **Action**: The AKS Cluster Autoscaler detects `Pending` pods due to insufficient resources and **automatically provisions new Azure Virtual Machines (Nodes)**.
+* **Cost Optimization**: When traffic goes down and nodes become completely unused, the Cluster Autoscaler deletes those nodes to save money.
+
+#### 💻 Azure CLI Command to Enable Cluster Autoscaler:
+```bash
+# Enable the cluster autoscaler on an existing AKS node pool
+az aks nodepool update \
+  --resource-group MyResourceGroup \
+  --cluster-name MyAKSCluster \
+  --name nodepool1 \
+  --enable-cluster-autoscaler \
+  --min-count 1 \
+  --max-count 5 # <-- [COMMENT] Azure will automatically scale between 1 and 5 VM nodes based on pod demand
+```
+
+---
+
+### 5. Best Practices for Production
+* **Define Requests & Limits**: Always set `requests` and `limits` in your pod YAML. Kubernetes cannot calculate auto-scaling metrics without them.
+* **Combine HPA & Cluster Autoscaler**: Use them together for true end-to-end automation (HPA scales the software pods, Cluster Autoscaler scales the hardware VMs).
+* **Don't Just Rely on CPU**: Use user-experience metrics (like request latency) via Azure Monitor for smarter scaling.
+* **Monitor Your Bill**: Set realistic `maxReplicas` and `max-count` limits. Aggressive scaling thresholds can cause unexpected cloud costs.
+
+---
+
+### 🔁 Recap Checklist
+
+| Scaling Level | What it Scales | Triggered By | Ideal For |
+| :--- | :--- | :--- | :--- |
+| **Manual** | Replicas (Pods) | Human Admin | Planned events & testing |
+| **HPA** | Replicas (Pods) | Metric Thresholds (CPU/RAM) | Live traffic spikes |
+| **Cluster Autoscaler** | VM Nodes (Hardware) | Pending Pods (No capacity) | Infrastructure elasticity |

@@ -1,0 +1,97 @@
+# Module 3: Microservices, Containers & Cloud Integration
+
+## Video 9: Troubleshooting Common Issues in AKS
+
+### 📌 Overview
+Even with the automated power of Kubernetes, issues can happen in production. Pods might fail to start, networks might block traffic, or scaling might freeze. 
+
+To troubleshoot effectively, you should always follow a structured approach: **Observe ➡️ Identify ➡️ Test ➡️ Resolve**.
+
+---
+
+### 1. Diagnosing Pod Failures
+One of the most frequent issues is pods failing to run or getting stuck. Common causes include typos in container images, missing secrets, or running out of memory.
+
+#### 🔍 Key Troubleshooting States:
+* **`ImagePullBackOff` / `ErrImagePull`**: Kubernetes cannot find the image or lacks permissions (Registry credentials/Secrets).
+* **`CrashLoopBackOff`**: The container started, but your application code crashed immediately after starting.
+* **`Pending`**: The pod cannot be scheduled on any node (usually because nodes are full and lack CPU/RAM).
+
+#### 💻 Must-Know Commands for Pods:
+```bash
+# 1. Inspect the lifecycle events and errors of a specific pod (Look at the "Events" section at the bottom)
+kubectl describe pod <pod-name>
+
+# 2. Check the real-time application logs to see why the code is crashing
+kubectl logs <pod-name>
+```
+
+#### 💡 Best Practice Fix:
+Always implement **Liveness and Readiness Probes** in your YAML configuration. They allow Kubernetes to automatically detect unhealthy pods and restart them before users experience downtime.
+
+---
+
+### 2. Resolving Networking Problems
+Networking issues can prevent Services from routing traffic to your pods, or block external users from accessing your application.
+
+#### 🔍 What to Check:
+* **Selectors vs Labels**: Ensure the `selector` block in your Service YAML matches the exact `labels` of your Pods.
+* **Network Policies**: Check if an internal firewall rule or Network Policy is accidentally blocking the traffic.
+* **Ingress Configuration**: Ensure paths, routing rules, and TLS/SSL certificates are correctly configured.
+
+#### 💻 Must-Know Commands for Networking:
+```bash
+# 1. Verify your Service exists and has an IP address assigned
+kubectl get svc
+
+# 2. Check if the Service successfully discovered the underlying Pod IPs
+kubectl get endpoints
+
+# 3. Test connectivity by running a temporary 'curl' command inside a pod
+kubectl exec -it <pod-name> -- curl http://<target-service-name>
+```
+
+---
+
+### 3. Handling Scaling Challenges
+Sometimes application auto-scaling stalls or stops responding completely.
+
+#### 🔍 Common Issues:
+* **HPA Misconfiguration**: The Horizontal Pod Autoscaler cannot fetch metrics because your deployment doesn't define resource `requests`.
+* **Hardware Capacity**: The Cluster Autoscaler cannot add new virtual machines because your Azure subscription hit its **Node Pool Quota** limit.
+
+#### 💻 Must-Know Commands for Scaling:
+```bash
+# Check the current status and targets of your auto-scaler
+kubectl get hpa
+```
+
+---
+
+### 4. Managing Resource Constraints
+When Virtual Machine nodes run out of CPU, Memory, or Disk Space, Kubernetes will start forcefully removing (**Evicting**) pods to protect the cluster.
+
+#### 🔍 Solutions & Controls:
+* **Resource Auditing**: Regularly run audits on resource allocations using monitoring tools.
+* **Taints and Tolerations**: Use these settings in your YAML to control pod placement, ensuring critical backend workloads have priority over non-essential pods.
+* **Multiple Node Pools**: Configure different node pools with different Azure VM sizes (e.g., CPU-heavy pools vs Memory-heavy pools) to distribute workloads efficiently.
+
+#### 💻 Must-Know Commands for Resources:
+```bash
+# Check the current CPU and Memory consumption of all your nodes
+kubectl top node
+
+# Check the resource consumption of all running pods
+kubectl top pod
+```
+
+---
+
+### 🔁 The Troubleshooting Cheat Sheet
+
+| Command | What it shows | When to use it |
+| :--- | :--- | :--- |
+| `kubectl describe pod <name>` | Lifecycle events, errors, & warnings | Pod is stuck in `Pending` or `ImagePullBackOff` |
+| `kubectl logs <name>` | Application console stdout output | Pod is stuck in `CrashLoopBackOff` |
+| `kubectl get endpoints` | Target pod IPs connected to a Service | Service is up but returning `404` or timeout errors |
+| `kubectl top node` | Live CPU and Memory utilization | Pods are getting `Evicted` or cluster is slow |

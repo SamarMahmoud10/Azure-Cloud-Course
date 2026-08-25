@@ -1,0 +1,103 @@
+# Module 3: Microservices, Containers & Cloud Integration
+
+## Video 10: Securing Applications in AKS
+
+### 📌 Overview
+Security is critical in production environments. Kubernetes introduces complex layers, and without proper safeguards, your workloads can be exposed to high risks. AKS integrates directly with the **Azure Security Ecosystem** to protect your identity, access, networks, data, and container images.
+
+---
+
+### 1. Role-Based Access Control (RBAC) & Entra ID
+Kubernetes RBAC controls **who** can do **what** inside your cluster. 
+
+* **Azure Integration**: AKS integrates with **Microsoft Entra ID** (formerly Azure Active Directory). This allows you to assign permissions to specific corporate users or groups.
+* **Principle of Least Privilege**: You can give developers permissions only to deploy apps, while operators get permissions to manage scaling and monitoring, reducing the risk of accidental or malicious changes.
+
+#### 📝 Conceptual YAML Example (Kubernetes Role Binding):
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dev-user-binding
+  namespace: development
+subjects:
+- kind: User
+  name: "developer@yourcompany.com" # <-- [COMMENT] Integrated with Microsoft Entra ID
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: edit # <-- [COMMENT] Grants permission to modify apps but not infrastructure settings
+  apiGroup: rbac.authorization.k8s.io
+```
+
+---
+
+### 2. Secrets Management (Azure Key Vault)
+Applications need sensitive information like API keys, database passwords, or SSL certificates. 
+
+* **The Golden Rule**: **Never hard-code secrets** inside container images or standard Git manifests.
+* **AKS Integration**: AKS integrates with **Azure Key Vault**. Secrets are securely stored and encrypted in the cloud and mounted into your application pods dynamically at runtime.
+* **Best Practice**: Rotate your secrets regularly to minimize the damage if an API key is ever leaked.
+
+#### 📝 Code Representation (Mounting a Secret into a Pod):
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secure-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-container
+        image: myregistry.azurecr.io/backend:v1
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-database-secret # <-- [COMMENT] Fetched securely from Kubernetes Secrets / Azure Key Vault
+              key: password
+```
+
+---
+
+### 3. Network Security
+AKS clusters run inside **Azure Virtual Networks (VNet)**, allowing you to use advanced network rules to isolate workloads.
+
+* **Network Policies**: By default, all pods in Kubernetes can talk to each other. Network Policies act as internal firewalls to restrict traffic between specific pods (e.g., preventing frontend pods from talking directly to the database).
+* **Ingress with TLS**: Ingress controllers should always be configured with HTTPS/TLS certificates to encrypt external traffic from the public internet.
+
+---
+
+### 4. Container Image Security
+Container images are the foundation of your software, so they must be trusted before running in production.
+
+* **Vulnerability Scanning**: **Azure Container Registry (ACR)** automatically scans your images for security vulnerabilities or outdated software libraries before they are deployed.
+* **Image Signing & Policies**: You can enforce rules in AKS that only allow signed or approved images to run inside the cluster, completely blocking untrusted code.
+
+---
+
+### 5. Runtime Monitoring & Compliance
+Security doesn't stop after configuring your cluster; you must continuously monitor active threats.
+
+* **Microsoft Defender for Containers**: Provides runtime protection. It actively detects suspicious live activities inside your cluster, such as privilege escalation attacks or unusual network traffic patterns.
+* **Compliance tools**: Ensure your cluster settings meet standard regulatory benchmarks (like ISO or PCI-DSS).
+
+---
+
+### 🔁 The Security Checklist
+
+| Security Layer | Primary Tool / Feature | Main Goal |
+| :--- | :--- | :--- |
+| **Access Control** | RBAC + Microsoft Entra ID | Restrict who can manage cluster resources. |
+| **Data Protection** | Azure Key Vault Integration | Keep passwords and API keys out of raw code. |
+| **Network Control** | Network Policies + VNet | Prevent unauthorized communication between pods. |
+| **Supply Chain** | ACR Image Scanning | Catch software vulnerabilities before deployment. |
+| **Threat Detection** | Microsoft Defender for Containers | Detect live attacks and hacking attempts at runtime. |

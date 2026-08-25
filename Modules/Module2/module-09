@@ -1,0 +1,103 @@
+# Module 3: Microservices, Containers & Cloud Integration
+
+## Video 9: Monitoring AKS Clusters
+
+### 📌 Overview
+Monitoring is essential for tracking how your applications behave in production. Without visibility, issues can go unnoticed until your users are impacted. While Kubernetes provides basic metrics, AKS integrates deeply with **Azure Monitor** and **Log Analytics** to deliver deep insights, detect problems early, and ensure compliance.
+
+---
+
+### 1. Metrics & Dashboards
+Metrics are numerical data points (like CPU, memory, and network usage) collected over time from your Pods and Nodes.
+
+* **Azure Monitor**: Collects these metrics automatically and displays them in visual dashboards.
+* **Anomalies Detection**: Dashboards help teams quickly spot sudden spikes in resource consumption.
+* **Holistic View**: You can combine infrastructure metrics (hardware) with application-level data (like HTTP request latency or error counts).
+
+#### 📝 Best Practice for Resource Definition (Deployment YAML):
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitored-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: app-container
+        image: myregistry.azurecr.io/monitored-app:v1
+        resources:
+          requests: # <-- [COMMENT] Setting requests ensures Azure Monitor can calculate percentage thresholds accurately
+            memory: "128Mi"
+            cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
+```
+
+---
+
+### 2. Logs & Diagnostics
+Logs provide text-based details about the inner behavior and errors of your running application code.
+
+* **Local Inspection**: You can stream logs directly from a single container using `kubectl`.
+* **Centralized Logging**: In production, you stream all logs to **Azure Log Analytics**. This allows you to search across multiple pods and correlate historical events even if a pod crashes and disappears.
+* **Structured Logging**: Using **JSON format** for your application logs makes it easier for Log Analytics to parse and analyze data automatically.
+
+#### 💻 Useful Kubectl Logging Commands:
+```bash
+# Stream live logs from a specific pod
+kubectl logs -f <pod-name>
+
+# View logs from a specific container inside a multi-container pod
+kubectl logs <pod-name> -c <container-name>
+
+# View logs of a pod that previously crashed and restarted
+kubectl logs <pod-name> --previous
+```
+
+---
+
+### 3. Alerts & Automation
+Alerts ensure that critical events trigger immediate actions instead of getting lost in raw log output.
+
+* **Metric Thresholds**: You can configure Azure Monitor to trigger an alert if a metric crosses a dangerous limit (e.g., CPU usage stays above 80% for more than 5 minutes).
+* **Proactive Actions**: Alerts can notify the operations team (via Email/SMS/Slack) OR trigger **Automated Actions** (like auto-restarting a failing pod or scaling up the workload).
+
+#### 💻 Azure CLI Example (Concept: Creating an Alert Rule):
+```bash
+# Concept: Creating an Azure Monitor metric alert rule for high CPU usage
+az monitor metrics alert create \
+  --name "High-CPU-Alert-AKS" \
+  --resource-group MyResourceGroup \
+  --scopes "/subscriptions/.../providers/Microsoft.ContainerService/managedClusters/MyAKSCluster" \
+  --condition "avg Percentage CPU > 80" \
+  --window-size 5m \
+  --evaluation-frequency 1m
+  # <-- [COMMENT] This rule checks the cluster every 1 minute. If CPU is > 80% for 5 minutes, it fires.
+```
+
+---
+
+### 4. Best Practices for Monitoring
+* **Track User Experience**: Don't just watch CPU/RAM. Monitor user-facing metrics like request latency and HTTP 5xx error rates.
+* **Avoid Dashboard Clutter**: Focus your dashboards only on actionable insights. Too much data causes "dashboard fatigue".
+* **Log Aggregation**: Always use Log Analytics for production. Never rely on local `kubectl logs` for long-term troubleshooting.
+* **Refine Alert Thresholds**: Regularly review your alert rules to avoid false positives (alert fatigue), ensuring your team only gets notified for real incidents.
+
+---
+
+### 🔁 Recap Checklist
+
+| Feature | Primary Tool | Data Type | Main Purpose |
+| :--- | :--- | :--- | :--- |
+| **Metrics** | Azure Monitor Dashboards | Numbers (CPU, RAM, Network) | Spotting capacity trends and resource spikes |
+| **Logs** | Log Analytics / `kubectl logs` | Text / JSON Strings | Deep troubleshooting and root-cause analysis |
+| **Alerts** | Azure Monitor Alert Rules | Notification Triggers | Automating recovery and notifying teams before downtime |
