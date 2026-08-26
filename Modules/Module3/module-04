@@ -1,0 +1,49 @@
+# Module 3: CRUD Operations with SDKs and REST APIs ⚙️
+
+As a developer, interacting with Azure Storage dynamically is a core requirement. This section breaks down how to perform **CRUD** (Create, Read, Update, Delete) operations programmatically and compares the two primary integration methods: **SDKs** and **REST APIs**.
+
+---
+
+## 1. What is CRUD? 📚
+CRUD represents the basic vocabulary used to communicate with data across any Azure Storage service (Blobs, Tables, Queues, Files):
+*   **Create:** Uploading a new file or saving new data (e.g., storing a new customer receipt).
+*   **Read:** Retrieving or downloading data (e.g., loading promotional images onto a website).
+*   **Update:** Modifying existing data or changing access properties.
+*   **Delete:** Removing outdated or temporary files.
+
+---
+
+## 2. SDKs vs. REST APIs: The Ultimate Comparison ⚖️
+
+Azure offers two pathways to interact with its services. Choosing the right one depends heavily on your application environment.
+
+| Feature | SDKs (Software Development Kits) | REST APIs (RESTful APIs) |
+| :--- | :--- | :--- |
+| **Concept** | Language-specific libraries (.NET, Python, Java, Node.js). | Standard HTTP network calls (`PUT`, `GET`, `DELETE`). |
+| **Complexity** | **Low:** Abstracts away raw network and protocol details. | **High:** Requires manual headers, tokens, and logic. |
+| **Updates** | Handles API versioning and updates **automatically**. | Requires **manual adjustments** if Azure updates its API specs. |
+| **Best For** | Large, full-scale software applications. | Lightweight firmware, embedded systems, third-party apps. |
+| **Analogy** | A friendly barista taking your coffee order smoothly. | Making the espresso completely manually—more control, more work. |
+
+---
+
+## 3. The 3 Methods of Authentication 🔑
+Before running any CRUD operations, your code must prove its identity to Azure. There are three ways to authenticate:
+1.  **Connection Strings (Account Key):** Best used strictly for **local development**. (Never hardcode these in production!).
+2.  **Shared Access Signatures (SAS):** Best for providing **time-limited**, granular access to external parties.
+3.  **Managed Identities (Microsoft Entra ID/Azure AD):** The **gold standard for production**. Cipher Coffee uses Managed Identities so that no raw keys or secrets are ever stored inside the application source code.
+
+---
+
+## 4. Code Architecture & Best Practices 🧠
+
+When building production-ready cloud pipelines, things like network fluctuations happen. Your code must be resilient.
+
+*   **Error Handling:** Always wrap your SDK operations in `try-except` blocks (or check explicit HTTP status codes in REST responses).
+*   **Transient Failures:** Be prepared to handle temporary throttling errors like **HTTP 429** (Too Many Requests) or **HTTP 503** (Service Unavailable) by implementing automatic retry policies.
+*   **Performance Optimization:** 
+    *   Use **Batch operations** to minimize the total number of network roundtrips.
+    *   Implement **Asynchronous methods** (`async`/`await`) to increase application throughput under heavy user traffic.
+*   **Debugging:** Always log the `x-ms-request-id` header in your application logs to track down failing requests with Azure support easily.
+
+> 💡 **The Coffee Machine Analogy:** If the pressure in a coffee machine fluctuates temporarily, you don't rebuild the entire shop; you simply retry the shot. Treat your cloud network requests the same way via smart retries!

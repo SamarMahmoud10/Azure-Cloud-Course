@@ -1,0 +1,47 @@
+# Module 3: Real-Time Processing with Cosmos DB Change Feed ⚡
+
+Traditional databases are passive—they wait for an application to query them. Azure Cosmos DB transforms this by offering the **Change Feed**, a feature that turns your database into an active, real-time event source. This enables developers to build event-driven architectures without writing complex polling mechanisms.
+
+---
+
+## 1. What is the Change Feed? 📥
+The Change Feed is a continuous, chronological stream of events that automatically logs whenever a JSON document inside a Cosmos DB container is **Created (Inserted)** or **Updated**. 
+*   **Like an Inbox:** Each change appears exactly once in the feed and remains unread until your application processes it (just like unread emails waiting in an inbox).
+*   **Ordering Guaranteed:** Changes are sorted in the exact order of occurrence within their partition key.
+*   ⚠️ **Note:** By default, the standard change feed tracks inserts and updates, but it does not track raw deletes (unless soft-deletes are implemented).
+
+---
+
+## 2. How Developers Consume the Change Feed ⚙️
+There are two primary architectural models to read and process these live data events:
+
+### 🔄 The Pull Model (Manual Check)
+*   **Concept:** The application explicitly requests data from the Change Feed when it needs it.
+*   **Implementation:** Developers write code using the Cosmos DB SDK or the `ChangeFeedProcessor` library to periodically poll the feed.
+*   **Analogy:** Asking the database at regular intervals, *"Hey, has anything new happened since I last checked?"*
+*   **Best For:** Scenarios where you need full control over the batch size, timing, and processing frequency of updates.
+
+### 🔔 The Push Model (Event-Driven - The Gold Standard)
+*   **Concept:** The system automatically pushes changes to downstream components the exact millisecond they happen.
+*   **Implementation:** Utilizing an **Azure Function with a Cosmos DB Trigger**. The function sleeps until a change occurs, waking up instantly to execute code.
+*   **Analogy:** Instantly hearing a phone ping when you receive a message, rather than opening the app every 5 minutes to check manually.
+*   **Cipher Coffee Example:** The moment a new order document hits Cosmos DB, a Serverless Azure Function triggers instantly to send a confirmation email to the customer and update the barista's dashboard.
+
+---
+
+## 3. Change Feed Architecture: Understanding Leases 🔖
+When an application reads from the Change Feed, the system needs a reliable mechanism to remember where it left off, especially if the app crashes or restarts. This is handled by **Leases**.
+
+*   **What is a Lease?** A lease is a separate storage record (state container) that acts as a **bookmark**. 
+*   **How it works:** It stores the exact position (continuation token) of the last successfully processed event. If your application server goes down and boots back up, it reads the lease file and resumes exactly where it left off.
+*   **Benefit:** Guarantees that your system never misses an event and prevents processing the exact same data twice.
+
+---
+
+## 4. Primary Use Cases for Change Feed 🚀
+Integrating Change Feed into your cloud architecture is ideal for four major patterns:
+
+1.  **Event-Driven Pipelines:** Triggering automated backend workflows (e.g., generating a PDF invoice the moment a sale is completed).
+2.  **Real-Time Analytics:** Feeding live database changes straight into data streaming tools or interactive operational dashboards.
+3.  **Data Synchronization (Microservices):** Keeping data consistent across completely separate microservices or caches (e.g., syncing Cosmos DB updates into an Elasticsearch cluster or a Redis cache).
+4.  **Downstream Integrations:** Streaming data events out of the database and into enterprise messaging systems like **Azure Event Hubs** or **Azure Service Bus** for further decoupled processing.

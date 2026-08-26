@@ -1,0 +1,45 @@
+# Module 3: CRUD Operations & Consistency Levels in Cosmos DB 🔄
+
+To interact with Azure Cosmos DB, developers primarily use language-specific SDKs. This section covers how **CRUD** (Create, Read, Update, Delete) operations work with JSON documents and explains the **Five Consistency Levels** that manage data replication globally.
+
+---
+
+## 1. CRUD Operations in Action 🛠️
+Using Cipher Coffee’s customer loyalty program as a real-world example, here is how the lifecycle of a JSON document is handled:
+
+*   **Create:** A new customer signs up for the loyalty program. The application code uses the SDK to create and insert a new JSON document into the loyalty container.
+*   **Read:** The customer opens their mobile app to check their active reward points. The app queries and reads their specific document instantly using its unique `ID`.
+*   **Update:** The customer redeems points for a free coffee. The app updates the points value in the document. 
+    *   ⚠️ **Crucial Rule:** While you can update almost any field in a document, the **Partition Key field is completely immutable (cannot be changed)** because it defines exactly where the document physically lives.
+*   **Delete:** A user requests to close their account. A backend cleanup process completely purges and deletes the document from the container.
+
+---
+
+## 2. The 5 Consistency Levels: Balancing Speed vs. Accuracy ⚖️
+When data is updated in one region (e.g., London), how fast does a user in another region (e.g., Tokyo) see that change? Cosmos DB offers a spectrum of five tunable choices to let you balance data correctness against performance latency:
+
+[Strong] ------------------ [Session] ------------------ [Eventual]Highest Accuracy                                         Lowest LatencySlowest Speed                                            Highest Speed
+### 1️⃣ Strong Consistency
+*   **Concept:** Strict linearizability. Every region globally is blocked from reading until the update is committed everywhere.
+*   **Behavior:** Everyone reads the exact same data at the exact same millisecond. 
+*   **Best For:** Financial applications or inventory systems where perfect data accuracy is critical. (Slowest performance).
+
+### 2️⃣ Bounded Staleness
+*   **Concept:** Reads lag behind writes by a predictable, user-defined threshold.
+*   **Behavior:** You can configure the secondary regions to be no more than "5 seconds behind" or "10 updates behind" the primary region.
+*   **Best For:** Applications requiring predictable, reliable reads without the heavy performance cost of Strong consistency.
+
+### 3️⃣ Session (The Default Option)
+*   **Concept:** "Read-your-own-writes" tracking. 
+*   **Behavior:** Any changes you make are instantly visible to you within your application session. Other users globally might see the old data for a few brief moments, but your own user experience is perfectly consistent.
+*   **Best For:** E-commerce shopping carts, user profiles, and most customer-centric web apps.
+
+### 4️⃣ Consistent Prefix
+*   **Concept:** Data is guaranteed to never be read out of order.
+*   **Behavior:** You will always see updates in the exact chronological sequence they happened, even if you are looking at a slightly delayed version (like watching a live stream with a 5-second delay). 
+*   *Example:* If a menu updates from *Latte* ➡️ *Mocha* ➡️ *Cappuccino*, you might skip *Mocha* due to lag, but you will **never** see *Cappuccino* appear before *Latte*.
+
+### 5️⃣ Eventual Consistency
+*   **Concept:** Weakest consistency model with no sequence or timing guarantees.
+*   **Behavior:** All global replicas will eventually catch up and get the update, but there is no tracking of order or time gaps. 
+*   **Best For:** Non-critical data requiring the absolute lowest latency and highest availability (e.g., counting website 'likes', tweets, or social media views).

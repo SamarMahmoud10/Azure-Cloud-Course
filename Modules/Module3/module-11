@@ -1,0 +1,39 @@
+# Module 3: Azure File Storage 🗄️
+
+Azure File Storage provides fully managed, cloud-based file shares that can be accessed using industry-standard network protocols. It gives organizations the flexibility of a traditional on-premises file server without the operational headaches of managing physical hardware, patching operating systems, or maintaining storage infrastructure.
+
+---
+
+## 1. Core Network Protocols 🌐
+Azure File Storage acts like a network drive that can be mounted simultaneously by multiple machines using two primary protocols:
+*   **SMB (Server Message Block):** The industry standard for **Windows** environments (also supported by macOS and Linux). It allows users to mount a familiar network drive directly inside their File Explorer.
+*   **NFS (Network File System):** Optimized primarily for **Linux** enterprise environments and high-performance cloud workloads.
+*   **REST API Support:** In addition to network mounting, developers can interact with files programmatically using standard Azure Client SDKs (.NET, Python, Java) via HTTP calls.
+
+---
+
+## 2. Primary Architectural Use Cases 🚀
+Azure File Shares are highly versatile and excel in three major cloud deployment patterns:
+
+1.  **Lift-and-Shift Migrations:** Perfect for moving legacy applications to the cloud. If an old application is hardcoded to look for a traditional file share path (e.g., `Z:\shared-folder`), you can replace it with Azure Files without rewriting the app's core code.
+2.  **Hybrid Cloud Storage:** Combining local infrastructure with the cloud. 
+    *   *Azure File Sync:* This feature replicates cloud file shares down to local on-premises Windows Servers. It caches frequently accessed files locally for high performance (LAN speed) while keeping the full file history synchronized in Azure.
+3.  **Persistent Shared Storage:** Providing shared file access across multiple virtual machines (VMs) or containerized architectures (Docker/Kubernetes clusters).
+    *   *Cipher Coffee Example:* The automated accounting scripts inside Azure and the local on-premises HR team both access the same shared folder to process nightly transaction logs and payroll data.
+
+---
+
+## 3. Production Security & Access Control (RBAC) 🔒
+While developers can use raw Storage Account Keys for quick local debugging, enterprise environments require secure, identity-based access managed via **Microsoft Entra ID (Azure AD)**. 
+
+Using **RBAC (Role-Based Access Control)**, you can assign granular network share permissions across departments:
+*   `Storage File Data SMB Share Contributor`: Granted to users or scripts that need full permissions to read, upload, modify, or delete files.
+*   `Storage File Data SMB Share Reader`: Granted to users who only need read-only access (e.g., auditing or viewing static company policies).
+
+---
+
+## 4. Data Protection via Share Snapshots 📸
+To prevent data loss from ransomware, file corruption, or accidental user deletions, Azure Files supports **Share-Level Snapshots**.
+*   **What is a Snapshot?** A read-only, point-in-time backup capture of the file share's exact state.
+*   **How it works:** It captures only the changes made since the last snapshot (differential backup), saving money on storage costs.
+*   **Recovery:** If an HR employee accidentally overwrites a vital spreadsheet, they can instantly look into the snapshot history and roll back to a previous version.

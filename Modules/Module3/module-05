@@ -1,0 +1,58 @@
+# Module 3: Azure Cosmos DB Architecture 🌌
+
+When an application grows globally, a traditional centralized database can cause high latency for distant users. Azure Cosmos DB is Microsoft's fully managed, globally distributed, multi-model NoSQL database engine designed to solve this exact scaling problem.
+
+---
+
+## 1. Multi-Model Architecture & APIs 🗃️
+Unlike rigid relational databases (SQL spreadsheets with fixed columns and rows), Cosmos DB handles flexible, schema-less data. It runs on a single unified engine but lets developers interact with it using their preferred "API flavor":
+
+*   **NoSQL (Core) API:** The native API for querying JSON documents using standard SQL syntax.
+*   **MongoDB API:** Allows existing MongoDB developers to migrate applications without changing code.
+*   **Cassandra API:** Optimized for wide-column data structures.
+*   **Gremlin API:** Designed for graph databases mapping complex relationships.
+*   **Table API:** Built for simple, lightweight key-value data models.
+
+---
+
+## 2. Horizontal Scaling & Partitioning 📈
+The secret behind Cosmos DB's massive scalability is its ability to split data across physical machines automatically via partitioning.
+
+*   **Partition Key:** A property you choose when creating a container that dictates how data is grouped (e.g., Cipher Coffee uses `customerId` as a partition key).
+*   **Logical Partitions:** All data sharing the same partition key (like all orders from one specific customer) are stored together for fast lookups.
+*   **The "Hot Partition" Risk:** If a partition key is poorly chosen (e.g., using a single popular store location ID where 90% of data flows), that partition receives an uneven load, creating a "hot partition" which throttles performance.
+
+---
+
+## 3. Performance Metrics: Request Units (RU/s) ⚡
+Cosmos DB measures database performance using **Request Units per second (RU/s)**. Think of RU/s as "energy tokens" spent on database operations:
+*   A simple read of a 1 KB document costs **1 RU**.
+*   Writes, deletes, and complex queries consume significantly more RU/s.
+
+### Throughput Modes:
+*   **Provisioned Throughput:** You manually set a fixed amount of RU/s to allocate.
+*   **Autoscale Throughput:** Azure scales the RU/s dynamically based on real-time traffic. Cipher Coffee uses autoscale to spin up extra database capacity during the morning rush and scale down during quiet hours to save money.
+
+---
+
+## 4. Global Distribution & High Availability 🌍
+Replicating a database across different contents can be done with simple checkboxes in the Azure Portal:
+*   **Regional Replicas:** Data is copied to regions closer to users (e.g., Seattle to Singapore) so they are served locally with milliseconds latency.
+*   **Automatic Rerouting:** If an entire Azure region goes offline due to a disaster, traffic is automatically and instantly rerouted to the nearest active backup region.
+*   **Multi-Region Writes:** Enables active database writes in multiple geographic zones simultaneously, ensuring zero data loss and maximum availability.
+
+---
+
+## 5. Developer-Centric Features 🧑‍💻
+*   **Automatic Indexing:** You do not need to build or manage complex database schemas. By default, Cosmos DB indexes every single property of your data immediately, ensuring fast queries out of the box.
+*   **Tunable Consistency Levels:** Cosmos DB provides **five distinct consistency levels** ranging from **Strong** to **Eventual**. 
+    *   *Strong Consistency:* Everyone globally reads the exact same data data at the same millisecond, but it introduces higher latency.
+    *   *Eventual Consistency:* Data replicates across regions in the background. It is much faster with lower overhead, but distant users might take a brief moment to catch up to the latest update.
+
+---
+
+## 💡 Monitoring and Optimization (The Dashboard) 📊
+Developers can track database metrics directly inside the Azure Portal:
+*   **RU/s Consumption:** Shows exactly how much "fuel" your operations are burning.
+*   **Latency:** Measures how fast requests are responding.
+*   **Request Charge:** Tells you the exact RU cost of a specific query, allowing you to rewrite heavy queries into optimized ones to minimize monthly costs.

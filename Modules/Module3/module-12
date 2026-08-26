@@ -1,0 +1,58 @@
+# Module 4: Event-Driven Architectures with Azure Event Grid 🎛️
+
+Modern cloud applications require systems to react instantly to changes (e.g., files uploaded, users making purchases, or resources deleted). Traditional systems rely on **Polling** (constantly asking the database/service if anything new happened), which wastes time, CPU cycles, and network resources. Azure Event Grid replaces polling with a real-time, serverless, **push-based notification** system.
+
+---
+
+## 1. The Core Pub/Sub Model 📢
+Event Grid operates on a **Publish-Subscribe (Pub/Sub)** architecture, acting as the intelligent cloud routing engine that connects two main parts:
+
+*   **Event Sources (Publishers):** Where the event originates. 
+    *   *Examples:* Azure Storage Accounts, Azure Resource Groups, IoT Hubs, or your own custom backend apps.
+*   **Event Handlers (Subscribers):** The services that receive and react to the event. 
+    *   *Examples:* Azure Functions, Logic Apps, Azure Service Bus Topics, or external third-party API Webhooks.
+*   **Event Subscription:** The actual configuration link you create to tell Event Grid which publisher should send events to which subscriber.
+
+---
+
+## 2. System Events vs. Custom Events ⚙️
+Event Grid is highly flexible and processes two distinct categories of events using the exact same underlying mechanism:
+
+1.  **System Events:** Built natively into the Azure ecosystem. Event Grid automatically listens to infrastructure-level changes.
+    *   *Example:* A `Microsoft.Storage.BlobCreated` event when a file is uploaded, or a `VM Deleted` event from Azure Compute.
+2.  **Custom Events:** Generated directly by your own application code.
+    *   *Cipher Coffee Example:* When a customer successfully buys coffee, the checkout API publishes a custom `NewOrderCreated` event. This custom event triggers a background function to automatically update the customer's loyalty points.
+
+---
+
+## 3. Event Grid Schema & Payloads 📄
+Every event passing through Event Grid follows a standardized, structured **JSON schema**. This ensures that regardless of the source, subscribers can parse and process the message programmatically.
+
+A typical Event Grid JSON payload includes:
+*   `eventType`: The specific action (e.g., `Microsoft.Storage.BlobCreated`).
+*   `subject`: The path to the specific resource (e.g., `/blobServices/default/containers/images/blobs/latte.png`).
+*   `eventTime`: The exact timestamp of when the event happened.
+*   `data`: A custom nested object containing service-specific details (e.g., file size, content type, URL).
+
+---
+
+## 4. Intelligent Filtering and Routing 📊
+You do not have to send every single event to every single handler. Event Grid allows you to build highly specific **Filters** on your subscriptions:
+*   **Filter by Event Type:** Send *only* `BlobCreated` events to a resize function, ignoring `BlobDeleted` events.
+*   **Filter by Subject Prefix/Suffix:** Only trigger a workflow if a file is uploaded inside a specific directory path (e.g., prefix matches `/containers/images/`). This ensures maximum architectural efficiency so handlers only process data they actually care about.
+
+---
+
+## 5. Major Architectural Benefits 🌟
+*   **True Serverless Scale:** There is zero infrastructure or servers for you to manage. Event Grid scales dynamically from zero requests to millions of events per second automatically.
+*   **Near Real-Time Responses:** Events are routed and delivered to handlers within a few seconds of occurring.
+*   **Enterprise Reliability:** It includes built-in retry policies with exponential backoff. If a subscriber's server is down, Event Grid retries delivery for up to 24 hours and supports **Dead-Letter Queues (DLQ)** to store failed event messages in a storage account for manual debugging.
+
+---
+
+## 💡 Real-World Automation (Cipher Coffee Example)
+Instead of manual work, Cipher Coffee automates its marketing pipelines via Event Grid:
+1.  The marketing team uploads a raw product image (`cold-brew.png`) to Blob Storage.
+2.  Event Grid detects the `BlobCreated` system event instantly.
+3.  It pushes the event payload to an **Azure Function**.
+4.  The serverless function executes immediately, resizes the image for mobile viewports, applies a company watermark, and publishes it live to the website gallery automatically.

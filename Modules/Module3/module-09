@@ -1,0 +1,46 @@
+# Module 3: Azure Table Storage 🟢
+
+Azure Table Storage is Microsoft's cloud-based NoSQL key-value store designed for storing massive amounts of structured, non-relational data. It is optimized for scenarios that demand simplicity, speed, and extreme cost-efficiency without the overhead of traditional relational databases.
+
+---
+
+## 1. Data Structure Hierarchy 📊
+Data in Table Storage is schema-less (each row can have different fields) and organized using three core components:
+
+1.  **Tables:** A collection of entities. Think of a table as a flexible folder or a bucket rather than a rigid SQL table.
+2.  **Entities:** A set of properties, resembling a row in a database.
+3.  **Properties:** Key-value pairs representing data fields, resembling columns. 
+
+⚠️ **The Dual-Key Requirement:** Every single entity **must** contain two special properties that uniquely identify it and enable lightning-fast indexing:
+*   **PartitionKey:** Determines the physical partition (cluster of servers) where the data lives. It is used to group similar entities for scalability.
+*   **RowKey:** The unique ID of the entity within that specific partition. 
+*   *Combination:* `PartitionKey` + `RowKey` forms the absolute unique primary key for any record.
+
+---
+
+## 2. Table Storage vs. Azure Cosmos DB ⚖️
+
+While both are NoSQL services, choosing between them comes down to a trade-off between **cost** and **advanced capabilities**.
+
+| Feature | Azure Table Storage | Azure Cosmos DB (Table API) |
+| :--- | :--- | :--- |
+| **Primary Focus** | Maximum cost-efficiency and simplicity. | Global scale, ultra-high performance, rich querying. |
+| **Latency** | Fast, but dependent on regional network traffic. | Guaranteed single-digit millisecond latency worldwide. |
+| **Distribution** | Stored within a single primary/secondary region. | Turnkey global distribution with multi-region writes. |
+| **Indexing** | Only indexes `PartitionKey` and `RowKey` by default. | Automatically indexes **every single property** upfront. |
+| **Cost** | **Very Cheap:** Ideal for massive, lightweight data. | **Expensive:** Billed based on provisioned or autoscaled RU/s. |
+
+### 💡 When to Choose Table Storage:
+*   Storing lightweight metadata like application configuration settings.
+*   Collecting massive volumes of system logs or IoT device telemetry data.
+*   Simple user profile lookups (e.g., Cipher Coffee storing basic customer drink preferences or notification settings).
+
+---
+
+## 3. CRUD Operations & Querying ⚙️
+Interacting with Table Storage can be done via the Azure SDKs, REST APIs, or UI tools like **Azure Storage Explorer**.
+
+*   **Create:** To insert a new entity, you must explicitly pass a defined `PartitionKey` and `RowKey` alongside your custom properties (e.g., creating a record with `PartitionKey="PremiumMembers"`, `RowKey="Cust_101"`, `Name="Samar"`, and `Points=120`).
+*   **Querying:** Searching data is highly efficient if you filter using the `PartitionKey` and `RowKey`. Querying custom properties that aren't part of these keys is allowed, but it results in a slower, full-table scan because they aren't indexed.
+*   **Update:** Entities are modified by replacing their property values or using an upsert mechanism based on their unique keys.
+*   **Delete:** To wipe a record permanently, you simply pass its `PartitionKey` and `RowKey`.
