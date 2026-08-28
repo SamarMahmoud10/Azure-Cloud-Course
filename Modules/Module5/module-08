@@ -1,0 +1,41 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 8 of Module 5 -->
+
+# Video 8: Application Map
+
+## When Troubleshooting Gets Messy
+Modern cloud apps aren't a single box anymore — they're a web of services, APIs, databases, and external dependencies. When something breaks, the hardest part isn't fixing it, it's figuring out where the problem actually is.
+
+## Introducing Application Map
+**Application Map** gives a live, visual topology of an application and everything it depends on.
+
+## What Is Application Map?
+A feature of Application Insights that provides a real-time visual representation of an application's architecture. It automatically discovers components (web apps, APIs, databases, external dependencies) and maps how they communicate based on telemetry collected at runtime. Using distributed tracing data, it builds this topology without manual configuration or custom diagrams — helping quickly understand system behavior and identify problem areas during troubleshooting.
+
+## How Application Map Is Created
+Built using distributed tracing. When a request flows through the system, telemetry follows it across services. Application Map stitches those traces together to build a dependency graph, without requiring custom tracing code.
+
+## Reading the Map
+- Each **node** represents a component (web app, database, etc.).
+- Each **line** represents a dependency — an outbound call to another service.
+
+Gives an immediate architectural overview, even for systems you didn't build yourself.
+
+## Key Metrics
+Every node shows critical metrics like average latency, request count, and failure rate — problem services can be spotted at a glance, without running a single query.
+
+## Dependency Health
+A red or orange line often means high latency or failures (depending on configured sensitivity). This answers a common troubleshooting question: is the app slow, or is something it depends on slow?
+
+## Application Map in Microservices
+Especially essential in microservice architectures, since a single user request often passes through many independent services. It visually shows how requests flow across services, making it easier to trace problems as they move from one component to another. By exposing unhealthy dependencies and failure patterns, it helps identify cascading failures and quickly understand the blast radius of an issue.
+
+## The Hidden Bottleneck (Example)
+A logistics company runs an order processing system with multiple services and a third-party shipping API. After a new release, customers report slow order confirmations during peak traffic, even though the application never goes down.
+
+**Without Application Map:** Service metrics and logs look normal, no clear errors. The team scales services and rolls back changes, but without visibility into dependencies, the root cause remains hidden.
+
+**With Application Map:** Shows high latency on calls to the external shipping API, while other services remain healthy. The team adds timeouts and retries, resolving the issue in minutes instead of hours or days.
+
+## Summary
+Application Map provides a real-time visual view of an application's architecture and dependencies using telemetry from Application Insights. It helps quickly understand how components communicate, where latency or failures occur, and how issues propagate across services — reducing guesswork and enabling faster root-cause analysis in distributed and microservice-based applications.

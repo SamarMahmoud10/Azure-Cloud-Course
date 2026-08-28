@@ -1,0 +1,44 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 5 of Module 5 -->
+
+# Video 5: Availability Tests
+
+## Is My App Up?
+Refreshing a website repeatedly to check if it's working is a familiar habit — but in cloud systems, waiting for customers to report outages is too late. You need a way to know your app is down before they do.
+
+## Availability Tests
+Act like a heartbeat monitor for your application in Application Insights. They check your app at regular intervals, potentially from different locations around the world, and alert you if something isn't responding correctly.
+
+## What Are Availability Tests?
+Synthetic checks that simulate user requests to your app. They run automatically on a scheduled basis to check website or API health, verify responses, and alert you if the app is slow, broken, or unavailable — like synthetic users constantly testing your app.
+
+## The Cost of Finding Out Too Late
+Scenario: an e-commerce site goes down on a Saturday night while the on-call engineer is asleep. Customers get error pages and leave. By morning, thousands in revenue are lost and customer trust is damaged.
+
+The worst part: servers looked healthy (CPU and memory fine), but a misconfigured load balancer was silently dropping requests. Nobody knew until Monday when support tickets piled up.
+
+This is why availability tests exist — they continuously probe the application from multiple locations worldwide, alerting the moment something fails, so you discover outages before customers do.
+
+## Types of Availability Tests
+- **Ping tests** – quick and lightweight.
+- **Standard tests** – run in a real browser and validate complex interactions.
+- **Code-based tests** – give developers full control over custom checks.
+
+### Ping Test
+Sends an HTTP GET request to your site. You choose the URL, testing frequency, and Azure test locations. Ideal for checking basic uptime and response codes (e.g., 200 = OK, 404 = failure).
+
+### Standard Test
+Also called browser tests — run the app in a real browser. Great for ensuring entire user journeys work (loading dashboards, signing in, loading a page, checking a cart). Catch issues plain HTTP checks might miss.
+
+### Custom (Code-Based) Test
+Developers write their own logic using the Application Insights SDK — e.g., testing an API workflow, validating a database response, or running multi-step business logic from code.
+
+## Test Results and Insights
+Availability tests generate rich data: graphs showing uptime percentage, performance trends, and detailed test run results. Failed tests can be drilled into to see what happened (timeout, network error, unexpected response). Over time, these insights help detect patterns, like recurring slowdowns or intermittent failures tied to specific locations or deployment times.
+
+## Best Practices
+- Run tests from multiple regions to catch location-specific issues.
+- Choose test frequencies that balance coverage with cost.
+- Validate critical user journeys, not just the homepage.
+- Connect tests to alert rules so failures notify the team immediately.
+- Review results regularly to spot patterns (e.g., recurring slowdowns at specific times might indicate scheduled jobs competing for resources).

@@ -1,0 +1,51 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 9 of Module 5 -->
+
+# Video 9: Optimizing Performance
+
+## Performance Is a Feature
+Performance isn't just about speed — it's about user trust. Slow applications lose users, increase costs, and amplify failures under load. Focus here: how Azure developers optimize applications for low latency and high traffic at scale.
+
+## Where Performance Problems Come From
+Most performance issues fall into a few categories: cold starts, network latency, slow dependencies (databases or APIs), and resource saturation under load. Understanding these categories helps choose the right optimization technique.
+
+## Latency vs. Throughput
+- **Latency** – how long a single request takes.
+- **Throughput** – how many requests you can handle at once.
+
+Optimizing for one doesn't always optimize the other.
+
+## Optimize the Critical Path
+Most user-facing latency comes from the **critical path** — the slowest sequence of calls required to serve a request. Performance optimization starts by identifying and shortening this path, not by tuning everything equally.
+
+## Reducing Dependency Latency
+Dependencies are the most common source of latency. Techniques include query optimization, connection pooling, batching requests, and reducing chatty calls. Dependency optimization often delivers bigger gains than scaling compute.
+
+## Caching
+Removes repeated work — instead of recalculating data, the app serves responses directly from memory. Reduces latency and protects downstream services during traffic spikes.
+
+### Azure Cache for Redis
+A fully managed, in-memory data store optimized for rapid access — commonly used for session state, frequently accessed data, and computed results. Being managed means high availability, scaling, and security without operating Redis yourself. **Note:** Azure Cache for Redis is being retired in 2028 in favor of Azure Managed Redis.
+
+### Azure Managed Redis (AMR)
+The new, improved version of Azure Cache for Redis, designed for higher performance and scalability. Each node runs multiple Redis servers in parallel, making more efficient use of CPU resources. More instances distributed across nodes allow more to run concurrently without overloading a single machine. A high-performance proxy manages connections, routes requests, and enables self-healing — ideal for high-traffic, low-latency applications.
+
+## Cache Design Considerations
+Caching introduces design decisions: defining expiration policies and choosing consistency over freshness when necessary. Common patterns:
+- **Cache-aside** – the application loads data into the cache only when needed.
+- **Cache invalidation** – ensures outdated or changed data is refreshed or removed.
+
+## Throttling and Backpressure
+Under extreme load, accepting every request can cause cascading failures. Throttling and backpressure protect the system by slowing or rejecting excess traffic gracefully, preserving overall availability.
+
+## Asynchronous and Queue-Based Patterns
+Offloading work to queues decouples user requests from long-running tasks. Services like Azure Service Bus or Storage Queues absorb traffic spikes and allow the system to process work at a controlled rate.
+
+## The Business Problem (Example)
+A retail company launches a flash sale promoted on social media. Traffic triples within minutes. The application doesn't crash, but pages become slow, checkout latency increases, and users abandon their carts — resulting in immediate lost revenue during peak demand.
+
+## Finding the Bottleneck
+Investigation shows every product page request hits the database for the same catalog data. Under high traffic, the database becomes the bottleneck, increasing response times across the app. Scaling compute alone won't fix the problem because the dependency remains slow.
+
+## Optimizing for Scale and Speed
+The team adds Azure Cache for Redis to serve frequently accessed data in memory, while autoscale and background processing handle increased load. Latency drops, checkout stabilizes, and peak-time revenue is captured.

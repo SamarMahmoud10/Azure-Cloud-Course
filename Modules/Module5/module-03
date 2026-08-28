@@ -1,0 +1,43 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 3 of Module 5 -->
+
+# Video 3: Automated Monitoring with Alerts
+
+## Why Alerts?
+Constantly watching dashboards is like sitting in front of security cameras all day — not practical. What you need is a smart alarm system that watches for you. That's exactly what Azure Monitor alerts do.
+
+## What Are Alerts?
+Like a home security system — you don't watch for intruders all day, sensors trigger alarms when conditions are met. An **alert rule** defines what to watch, when to notify, and what to do. They work continuously, so if a storage account goes down at 3 AM, you're notified immediately, not when you check the dashboard the next morning.
+
+## Alert Rules Explained
+Example: an alert rule monitoring a storage account's availability.
+- **Signal** – the metric you watch.
+- **Condition** – defines when to alert (e.g., "when average availability drops below 99%").
+- **Evaluation frequency** – how often Azure checks (e.g., every 5 minutes).
+
+Alerts are **stateful**, like a smoke alarm — when availability drops, you're notified; when it recovers, you get a "resolved" notification automatically.
+
+## Action Groups: Your Response Team
+Action groups are like an emergency response team — when a fire alarm sounds, it doesn't just make noise, it calls the fire department, activates sprinklers, and lights exits. Similarly, when an alert fires, the action group executes responses: send emails, trigger automation, or create tickets.
+
+Action groups are **reusable** — create one called "Operations Team" and use it for availability alerts, transaction alerts, and error alerts: one response team for multiple emergencies.
+
+## Put Into Practice
+Managing a storage account with two concerns — availability and cost — using two alert rules with the same action group:
+- At 2 AM, a network issue drops availability to 95%. Within 5 minutes, the on-call engineer gets an email.
+- The issue resolves by 2:30 AM, and Azure sends a "resolved" notification.
+- Separately, if someone misconfigures an app causing transaction spikes, a separate cost alert catches the issue before month-end billing surprises.
+
+## Lookback Period & Evaluation Frequency
+Like a security guard doing rounds:
+- **Lookback period** – how far back they check (e.g., "any activity in the last 15 minutes?").
+- **Evaluation frequency** – how often they check (e.g., "every 5 minutes").
+
+With a 15-minute lookback and 5-minute evaluation, windows overlap. If a transaction spike occurs at 2:03 PM, you're notified by 2:05 PM, not 2:15 PM. This overlap ensures faster detection without alert spam.
+
+## Best Practices
+1. Start with critical metrics (availability and errors), then expand — don't create 50 alerts on day one.
+2. Set realistic thresholds by learning your baseline.
+3. Use severity levels wisely — reserve 3 AM pages for critical outages, not informational events.
+4. Create action groups by team responsibility.
+5. Test your alerts — generate test conditions and verify emails arrive. Don't discover your notifications go to a dead mailbox during an actual crisis.

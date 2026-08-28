@@ -1,0 +1,33 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 6 of Module 5 -->
+
+# Video 6: Exploring Log Analytics
+
+## Logs Everywhere
+Every Azure service generates logs — activity logs, metrics, diagnostics. But when those logs live in different places, troubleshooting becomes guesswork, wasting time jumping between tools trying to piece together what happened.
+
+## Log Analytics Workspace
+Solves this problem — brings logs from many Azure resources into one central place, where you can query, correlate, and investigate issues much faster.
+
+## What Is a Log Analytics Workspace?
+A central store for logs, collecting data from multiple Azure resources in one place. Uses the Azure Data Explorer engine to handle large volumes of data efficiently. Supports **KQL** for searching and analyzing logs. Works across subscriptions and resource groups, making cross-environment troubleshooting easier. Forms the foundation of Azure Monitor, enabling alerts, dashboards, and deeper insights.
+
+## Why It Matters
+Without a workspace, logs are stored in separate places, making it difficult to correlate issues across services — engineers jump between tools, leading to slow incident response and harder root cause analysis. With a workspace, logs are unified, enabling end-to-end tracing across applications and infrastructure, faster correlation of related events, and significantly reduced troubleshooting time.
+
+## What Data Can You Send?
+Almost any type of data — platform logs, performance metrics, application traces, and security logs. This makes the workspace a universal logging pipeline: a single place to monitor behavior, investigate issues, and analyze activity across the entire Azure environment.
+
+## Exploring Logs in the Workspace
+Once data flows in, use the query editor to explore and investigate it. Logs are organized in tables. You can filter by time range, resource, or event type, and combine filters to uncover patterns, spot anomalies, or investigate specific issues.
+
+## The Login Mystery (Example)
+Users report problems at 2:15 PM. A single query correlating App Service requests, API responses, and database connections within that timeframe reveals: a spike in database connection timeouts started at 2:14 PM, causing API failures, which caused login errors.
+
+Drilling deeper reveals a runaway query from a reporting job consuming all database connections. Stopping the job restores connections and logins. Total investigation time: ten minutes instead of an hour.
+
+## Introduction to KQL
+**KQL (Kusto Query Language)** is used to explore and analyze data inside a Log Analytics workspace. Designed to be fast and optimized for huge volumes of logs. Unlike SQL, KQL is **read-only**, making it safe for exploration. Used to filter events, find errors, correlate issues across resources, and generate insights for dashboards and alerts — the core tool for turning raw log data into answers during monitoring and troubleshooting.
+
+## Summary
+Log Analytics is the backbone of Azure Monitor — it collects logs, stores them efficiently, and provides powerful tools to query and visualize them. From troubleshooting to performance tuning to alerting, everything starts with a well-configured Log Analytics Workspace.

@@ -1,0 +1,39 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 2 of Module 5 -->
+
+# Video 2: Collecting and Viewing Metrics
+
+## Metrics Recap
+Metrics are like a cloud application's vital signs — real-time, numerical data about a resource's performance and health. Think of them as a continuous heartbeat monitor for storage accounts, virtual machines, databases, and other services.
+
+## How Metrics Are Collected
+Azure automatically collects metrics from resources — no installation or code required. The moment a storage account or web app is created, Azure starts tracking metrics like transaction counts, data ingress and egress, availability, and latency.
+
+## Example: Storage Account Metrics
+For a storage account hosting marketing materials and customer documents, Azure automatically tracks:
+- **Transactions** – how many read and write operations occur.
+- **Ingress** – the amount of data uploaded.
+- **Egress** – the amount of data downloaded.
+- **Availability** – the percentage of time storage is accessible.
+
+These metrics update in near real-time, giving continuous visibility.
+
+## Customizing Your View
+The Metrics Explorer is highly customizable:
+- Change the time range (last hour, day, week, or custom period).
+- Add multiple metrics to the same chart for comparison.
+- Split metrics by dimensions (e.g., API name or response type) to drill down into specific operations.
+- Apply aggregations like sum, average, minimum, or maximum.
+
+## Metrics vs. Logs
+- **Metrics** – numerical and time-series based. Answer questions like "How many transactions occurred?" or "What was the average response time?"
+- **Logs** – capture detailed event-level information. Answer questions like "Which user triggered an error?" or "What was the exact request that failed?"
+
+Logs provide rich context, while metrics provide quick, quantifiable insights.
+
+## Why Metrics Matter
+By tracking metrics, you can:
+- Detect issues early before they impact users.
+- Understand usage patterns and capacity needs.
+- Set up alerts to notify you when thresholds are crossed.
+- Create dashboards that provide a unified view of all your resources.

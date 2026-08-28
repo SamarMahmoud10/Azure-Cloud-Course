@@ -1,0 +1,34 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 1 of Module 5 -->
+
+# Video 1: Introduction to Azure Monitor
+
+## The Cost of Flying Blind
+Scenario: a web application serving thousands of customers starts throwing errors at 2 AM on a Saturday. Users can't complete purchases. By the time someone notices Monday morning, a weekend's worth of revenue is lost, along with frustrated loyal customers.
+
+## Failing Applications
+Without proper monitoring, cloud applications fail silently — problems are only discovered when users complain, or worse, when they leave. Azure Monitor exists to prevent this. It's not just about collecting data; it's about giving visibility to catch problems before they impact users, and tools to diagnose issues in minutes instead of hours.
+
+## Why Monitoring Matters
+For those completing the AZ-204 track: building storage accounts, deploying functions, and configuring databases is only half the job.
+
+## Production Failures
+In production, things break — networks fail, traffic spikes, and code behaves differently under load. As a developer, responsibility extends beyond deployment to keeping applications healthy and performant.
+
+## Safety Net
+Azure Monitor is a safety net — it continuously collects telemetry from every resource deployed, from virtual machines to storage accounts to web applications. More importantly, it helps you act on that data before small issues become outages.
+
+## Course Overview
+By the end of the course, you'll understand why Azure Monitor is essential for building reliable cloud applications, and how metrics, logs, alerts, and Application Insights work together to detect issues early, reduce downtime, and optimize performance — skills that support both the AZ-204 exam and real-world cloud development.
+
+## Metrics
+Measurements that give real-time insights into the performance and health of resources — like a heartbeat for cloud services. Track key indicators like CPU usage, memory consumption, or network activity, helping you quickly spot issues before they become problems.
+
+## Logs
+Capture detailed event-level information. While metrics tell you "response time increased," logs tell you "this specific user request failed with this error message at this timestamp." Logs give the forensic detail needed to diagnose root causes.
+
+## Alerts
+Transform monitoring from passive observation to active protection. Instead of watching dashboards constantly, you define conditions that matter, and Azure notifies you automatically (e.g., if availability drops below 99% at 3 AM, you'll know within minutes).
+
+## Dashboards
+Bring everything together in a single view — pin metrics, logs, and alert status from multiple resources, giving your team a unified picture of application health.

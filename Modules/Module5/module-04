@@ -1,0 +1,34 @@
+<!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
+<!-- Video 4 of Module 5 -->
+
+# Video 4: Exploring Application Insights
+
+## The Problem
+Trying to understand what's happening inside an application by scrolling through endless logs is slow, repetitive, and frustrating. What's needed is a tool that collects data, spots issues, and gives clarity instantly — that's exactly what Azure Application Insights does.
+
+## What Is Application Insights?
+A monitoring service within Azure that helps you understand how your application behaves in the real world. It collects telemetry automatically, including request rates, failures, response times, performance, and external dependencies. It is language-agnostic and works wherever your app runs.
+
+## Why Application Insights Matters
+Instead of waiting for a user to report a problem, you can find performance issues early, trace the root cause, and observe how customers use your features. It turns raw telemetry into meaningful insights.
+
+## How It Works
+The application sends telemetry through an SDK or agent. Azure ingests the data, processes it, and provides dashboards, charts, and detailed traces for effective troubleshooting.
+
+## Distributed Tracing in Action
+One of the most powerful features — follow a user's request across multiple services and dependencies, seeing exactly where a slowdown or failure occurred. No more guessing which service caused the issue; Application Insights shows the entire journey.
+
+## Live Metrics
+Shows what's happening right now — real-time charts for request rates, failures, and performance without waiting for data ingestion. Especially useful during deployments or incident response.
+
+## Integrations Across Azure Services
+Integrates naturally across Azure services — App Service, Function App, AKS, containers, or APIs — stitching telemetry together automatically. Makes it a central tool for observability across your entire architecture.
+
+## Put Into Practice
+Application Insights as a monitoring hub, tracking availability and failures, with both alert types routed into a single action group that notifies the team:
+- During morning checks, availability signals start failing. The alert rule triggers and the on-call engineer is notified immediately.
+- The engineer investigates, identifies the cause, and restores the system. Application Insights recognizes availability has returned to normal and sends a resolved alert.
+- If a release suddenly increases failed requests, Application Insights detects the change and alerts the team — catching deployment-related failures before users experience a full outage.
+
+## Summary
+Application Insights gives clear visibility into how an application behaves. It's easy to enable across Azure services and immediately starts collecting useful telemetry (requests, dependencies, exceptions). With distributed tracing and live metrics, you can follow requests through the system and spot issues in real time — helping troubleshoot faster and improve overall performance and reliability.
