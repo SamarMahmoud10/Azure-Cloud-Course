@@ -10,14 +10,14 @@ The core objective of this track is to build, deploy, optimize, secure, and moni
 
 This track is divided into structured modules, moving from cloud fundamentals to advanced application development, data orchestration, and cloud architecture.
 
-### 📦 Module 1: Core Compute Solutions & Web Applications
+###  Module 1: Core Compute Solutions & Web Applications
 *   **Azure App Service & Web Apps**: Hosting scalable websites, APIs, and mobile back-ends without server management.
 *   **Deployment Methodologies**: Utilizing ZIP packages, FTP, and continuous integration via GitHub and Azure DevOps.
 *   **Configuration & Environment Settings**: Managing application settings, database connection strings, and secure runtime variables.
 *   **Scaling & Resiliency**: Implementing Vertical Scaling (Scale Up) and Horizontal Scaling (Scale Out/Autoscaling based on CPU/traffic).
 *   **Troubleshooting & Monitoring**: Diagnostic logging and performance auditing using Azure Monitor and Application Insights.
 
-### ⚡ Module 2: Serverless Architecture & Event-Driven Apps
+###  Module 2: Serverless Architecture & Event-Driven Apps
 *   **Azure Functions**: Building cost-effective, serverless, and event-driven computing blocks.
 *   **Triggers and Bindings**: Connecting functions seamlessly to storage, queues, and HTTP requests without writing boilerplate integration code.
 *   **Durable Functions**: Writing stateful serverless workflows, managing long-running orchestrations, and implementing patterns like Fan-out/Fan-in.
@@ -27,30 +27,30 @@ This track is divided into structured modules, moving from cloud fundamentals to
 *   **Azure Container Instances (ACI)**: Deploying isolated, fast-booting containers instantly without orchestrator overhead.
 *   **Azure Container Apps**: Building serverless microservices with built-in scaling, revision tracking, and traffic splitting.
 
-### 🗄️ Module 4: Cloud Data, Storage, and Databases
+###  Module 4: Cloud Data, Storage, and Databases
 *   **Azure Blob Storage**: Storing unstructured big data (images, videos, deployment packages) with tiering (Hot, Cool, Archive) and lifecycle rules.
 *   **Azure Cosmos DB**: Designing globally distributed, multi-model NoSQL databases with low latency.
 *   **Azure SQL Database**: Managing fully managed, relational databases with built-in backup, high availability, and performance tuning.
 *   **Data Security**: Securing data at rest and in transit using Shared Access Signatures (SAS) and managed keys.
 
-### 🔐 Module 5: Cloud Security, Identity, and Governance
+###  Module 5: Cloud Security, Identity, and Governance
 *   **Microsoft Entra ID (Formerly Azure AD)**: Implementing cloud identity management, user authentication, and single sign-on (SSO).
 *   **Role-Based Access Control (RBAC)**: Enforcing the principle of least privilege across cloud resources using identity roles.
 *   **Azure Key Vault**: Centralizing and securing cryptographic keys, application secrets, certificates, and database credentials.
 *   **Managed Identities**: Allowing Azure resources to securely authenticate with each other without hardcoding credentials in files.
 
-### 🏎️ Module 6: Caching, Content Delivery, and Performance
+###  Module 6: Caching, Content Delivery, and Performance
 *   **Azure Cache for Redis**: Deploying high-throughput, low-latency in-memory data caches to accelerate database query response times.
 *   **Azure Content Delivery Network (CDN)**: Caching static web assets at global edge locations to minimize latency for global end-users.
 
-### 🔄 Module 7: Cloud Integration, Messaging, and DevOps Pipelines
+###  Module 7: Cloud Integration, Messaging, and DevOps Pipelines
 *   **Azure Service Bus**: Implementing enterprise message queuing and publish/subscribe patterns for asynchronous microservice communication.
 *   **Azure Event Grid & Event Hubs**: Orchestrating massive event ingestion pipelines and reactive cloud architectures.
 *   **Infrastructure as Code (IaC) & CI/CD**: Automating infrastructure provisioning and code deployment workflows securely.
 
 ---
 
-## 🛠️ Explored Azure Services Dashboard
+##  Explored Azure Services Dashboard
 
 | Category | Services Covered |
 | :--- | :--- |
@@ -62,7 +62,7 @@ This track is divided into structured modules, moving from cloud fundamentals to
 
 ---
 
-## ✍️ About this Repository
+##  About this Repository
 
 This repository is a live documentation project updated continuously as I progress through the full multi-module cloud track. Each module's folder contains detailed notes designed to translate dense cloud-architectural concepts into intuitive, real-world examples. 
 

@@ -1,0 +1,31 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 1 of Module 4 -->
+
+# Video 1: Introduction to Azure Security
+
+## Why Security Matters
+Security is like a seatbelt for your cloud journey — it keeps apps, data, and users safe. Small mistakes (exposed secrets, misconfigured access) can lead to data leaks, downtime, or breaches. This course helps you build secure, reliable apps in Azure, and aligns with the Microsoft Azure Developer Associate certification objectives.
+
+## Building Blocks of Azure Security
+Core Azure security foundations covered in this course:
+- **Microsoft Entra ID** – controls sign-in and access permissions (who can do what).
+- **Microsoft Identity Platform** – helps apps prove their identity and request access securely.
+- **Azure Key Vault** – a secure place to store sensitive information (secrets, keys, certificates).
+
+## Secure Access & Communication
+Topics on securing communication between services and users:
+- **Shared Access Signatures (SAS)** – share temporary, controlled access to data.
+- **Managed Identities** – let applications connect securely to other services without storing credentials.
+- **Microsoft Graph** – automate identity-related tasks like managing users and permissions.
+
+Hands-on practice with these tools will be done step by step in the Azure portal.
+
+## Meet PeopleSphere
+**PeopleSphere** is the fictional SaaS company used as a running example throughout the course. It's an HR software provider with a platform that includes:
+- HR portal for employees
+- Payroll management
+- Employee records
+- Leave requests
+- Compliance tools
+
+Throughout the course, PeopleSphere scenarios will show how Azure services (Entra ID, Key Vault, Microsoft Graph) secure, manage, and connect real-world HR systems.

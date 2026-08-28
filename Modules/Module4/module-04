@@ -1,0 +1,38 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 4 of Module 4 -->
+
+# Video 4: Azure App Configuration
+
+## What Is Azure App Configuration?
+In cloud applications, settings often become scattered across configuration files, environment variables, or databases, making them hard to manage. Azure App Configuration centralizes all application settings in one secure location, letting you update settings or toggle features without redeploying. Being fully managed by Azure, it also provides built-in security and seamless integration with other Azure services.
+
+**Example (PeopleSphere):** Stores settings like login rules, password expiration policies, and toggles for new HR features in App Configuration instead of hardcoding them.
+
+## App Config Storage: Keys
+Data is stored as key-value pairs. Keys uniquely identify each setting — they can be simple/flat or structured using prefixes to create a hierarchy (e.g., `PeopleSphere:HR:ThemeColor` uses colons to create a folder-like structure).
+
+## Labels
+Optional, and allow assigning different values to the same key for different environments (e.g., Dev or Prod). The app references the same key name but retrieves environment-specific values depending on where it runs.
+
+## App Config Storage: Values
+Values store the actual data, support all characters, and can include metadata (additional descriptive info like type or format). All values are encrypted at rest and in transit — but metadata is **not** encrypted the same way, so it should only contain non-sensitive descriptive information.
+
+## Feature Management
+Features represent specific parts of an application (dark mode, beta access, promotional banners). Feature management allows toggling these without modifying code or redeploying. Three core components:
+- **Feature Flags** – simple switches that turn features on or off.
+- **Feature Manager** – a library/SDK integrated into the application; reads flag values and determines app behavior. Caches configuration values intelligently and refreshes automatically when needed.
+- **Filters** – determine when a feature should be active (based on user group, geographic region, or time).
+
+## Securing Data in Azure App Configuration
+Three main security options: **Customer Managed Keys**, **Private Endpoints**, and **Managed Identities**.
+
+### Customer-Managed Keys
+Bring your own encryption keys from Azure Key Vault, using Managed Identity instead of relying solely on Azure-managed keys. This process "wraps" (protects) the internal encryption key that secures your data. The wrapped key is stored securely, while the unwrapped version is temporarily cached in memory for performance and automatically refreshed every hour to stay synced with Key Vault.
+
+### Secure with Private Endpoints
+Assigns a private IP address from your virtual network, ensuring traffic doesn't traverse the public internet. Ideal for internal applications and sensitive data; supports firewall rules and connectivity from on-premises environments via VPN or ExpressRoute.
+
+### Securing with Managed Identities
+Allow applications to securely access Azure services without storing credentials in code. Azure automatically handles identity creation and key rotation. Two types:
+- **System-assigned identity** – created automatically by Azure for your application, deleted when the application is removed.
+- **User-assigned identity** – created once and can be assigned to multiple services as needed.

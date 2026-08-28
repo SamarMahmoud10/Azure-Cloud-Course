@@ -1,0 +1,42 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 8 of Module 4 -->
+
+# Video 8: Introduction to Microsoft Graph
+
+## What is Microsoft Graph?
+Microsoft Graph is a unified API to access Microsoft 365 data — things like your calendar, emails, files, and even your manager's name, all the information stored across Outlook, Teams, OneDrive, and Entra ID. Instead of connecting to each service separately, you use one endpoint. It simplifies development with a single authentication flow and SDK.
+
+**Example (PeopleSphere):** Uses Outlook for leave requests, Teams for HR meetings, and OneDrive for payslips. Normally that would mean managing three different connections, but Microsoft Graph connects them all in one place, making integration much easier.
+
+## Anatomy of a Graph API Call
+Microsoft Graph API gives a simple way to interact with Microsoft Cloud service resources using a single endpoint. A request breaks down into:
+- **HTTP method** – defines the action (GET, POST, DELETE, etc.).
+- **Version** – shows the API version.
+- **Resource** – the data you interact with (e.g., users).
+- **Query Parameters** – let you filter or select specific data.
+- **Headers** – contain metadata like your Authorization token to prove who you are.
+
+## Methods
+- **GET** – retrieve data (e.g., fetching user information).
+- **POST** – create new data (e.g., adding a calendar event).
+- **PUT** – replaces data entirely.
+- **PATCH** – makes partial updates to existing data (e.g., editing a user's profile).
+- **DELETE** – removes data (e.g., deleting a file or user).
+
+## Versioning
+- **v1.0** – stable, contains generally available APIs. Use this for all production apps.
+- **beta** – includes preview features still in development. Great for testing new functionality, but unstable and may undergo breaking changes — only use in testing environments, not production.
+
+## Resource
+The data you work with in Microsoft Graph. Examples: `/users` for user details, `/groups` for group info, `/events` for calendar events.
+
+## Query Parameters
+Let you customize your request:
+- `$select` – choose which fields to include (e.g., `id`).
+- `$filter` – narrow results down based on conditions.
+- `$top` – limits the number of results returned (e.g., first 5 users).
+
+## Headers
+Carry important metadata with requests and responses. Two main types:
+- **Standard Headers** – used in all requests (e.g., `Authorization` for secure access, `Content-Type` for the format of the data).
+- **API-Specific Headers** – depend on the API call (e.g., `Retry-After` tells you how long to wait before retrying, `Location` shows where to track long-running operations).

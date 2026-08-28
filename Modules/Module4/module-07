@@ -1,0 +1,40 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 7 of Module 4 -->
+
+# Video 7: Secure Access with Managed Identities
+
+## The Problem with Secrets
+Hardcoding a secret or password to connect an app to an Azure service is risky and hard to rotate or protect.
+
+## Managed Identity
+Azure provides **Managed Identity** to solve this. Azure creates a trusted identity in Microsoft Entra ID for a resource (like a virtual machine or web app). This identity lets the resource securely access other services (such as Storage) without storing secrets.
+
+## How It Works
+A managed identity is a special type of service principal, fully managed by Azure — Azure automatically creates, rotates, and deletes credentials when no longer needed.
+
+**Example (PeopleSphere):** The payroll module in the HR app accesses Key Vault through a managed identity without storing secrets or writing extra code.
+
+## System-Assigned Managed Identity
+- Enabled directly on an Azure resource (e.g., a Virtual Machine). Azure automatically creates an identity in Microsoft Entra ID — no secrets or manual setup needed.
+- Tightly tied to the resource — if the resource (e.g., VM) is deleted, the identity is deleted too. Cannot be reused across other services.
+- Permissions to access other services (Key Vault, Storage) are assigned through Azure RBAC.
+- Ideal for workloads confined to one resource.
+
+## User-Assigned Managed Identity
+- Created separately, as its own Azure resource.
+- Best when multiple resources share one identity — e.g., in a microservices app, several services in separate App Services may all need the same read access to a central Azure Storage account.
+- Reusable — not tied to any single resource. If the resource is deleted, the identity still exists and can be used elsewhere.
+- Access granted via Azure RBAC, same as system-assigned.
+- Great fit when multiple resources share the same identity.
+
+## System vs. User-Assigned: Key Differences
+| | System-Assigned | User-Assigned |
+|---|---|---|
+| Created with resource | Yes | No (created separately) |
+| Deleted with resource | Yes | No (persists) |
+| Reusable across resources | No | Yes |
+| Access control | Azure RBAC | Azure RBAC |
+| Best for | Single-resource scenarios | Multiple resources sharing one identity |
+
+## What Services Support Managed Identities?
+Any Azure service that supports Entra ID authentication — including Virtual Machines, App Services, Functions, Key Vault, and Azure Storage, among others. The concept works the same way across all services (check Microsoft's official documentation for the full list).

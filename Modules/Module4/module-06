@@ -1,0 +1,47 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 6 of Module 4 -->
+
+# Video 6: Advanced Key Vault Settings
+
+## Entra ID Powers Key Vault Authentication
+When a user or app wants to access Azure Key Vault, the first step is **authentication** (proving who they are). Azure handles this using Microsoft Entra ID.
+
+## Identity Types in Key Vault
+- **User** – a real person.
+- **Group** – a collection of users.
+- **Service Principal** – a digital identity for an app or service.
+
+## App Authentication Methods
+Two paths for apps:
+- **Managed Identity** – Azure creates and manages it, so there are no credentials to handle (most apps use this).
+- **Manual registration** – developers register the app manually, but this requires managing secrets.
+
+## Authorization in Key Vault
+Once authenticated, **authorization** defines what a user or app is allowed to do. Two models: **Access Policies** and **Azure RBAC**.
+
+### Access Policies (Legacy)
+The older method. Only controls the **data plane** (actions like reading a secret or creating a key) — not the **management plane** (settings like who can delete or modify the vault itself). Simple and works well for isolated environments like development or single-use apps.
+
+### RBAC: Role-Based Access Control (Recommended)
+The recommended model. Offers unified access control across Azure, covering both the management and data plane. Supports features like Privileged Identity Management, Multi-Factor Authentication, and Conditional Access — ideal for secure, enterprise-grade setups.
+
+## Soft Delete
+If a secret powering a production app gets deleted by mistake or by an attacker, that could cause major disruption. With **Soft Delete** enabled, that data isn't lost — it moves into a recoverable state where it can be restored.
+
+- Applies to the vault itself and everything inside it (keys, secrets, certificates).
+- Deleted items stay recoverable for a configurable period between **7 and 90 days**.
+- Enabled by default for new vaults, and **can't be turned off** once configured.
+
+## Purge Protection
+Soft Delete lets you recover deleted items, but **Purge Protection** prevents someone from permanently deleting ("purging") them with no recovery. It blocks permanent deletion during the retention period, even if the user has full permissions. Applies to both the vault and its contents.
+
+- Recovery is always possible during the configured 7–90 day period.
+- Soft Delete must be enabled first.
+- Once Purge Protection is turned on, it **cannot be disabled**.
+
+## Best Practices
+- Isolate secrets by creating a separate vault for each app and environment.
+- Restrict access to only what is truly necessary.
+- Turn on Soft Delete and enable Purge Protection.
+- Perform backups after critical changes.
+- Enable diagnostic logging — send logs to Azure Monitor or Microsoft Sentinel to detect suspicious activity and maintain a complete audit trail.

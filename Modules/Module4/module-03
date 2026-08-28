@@ -1,0 +1,56 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 3 of Module 4 -->
+
+# Video 3: Microsoft Identity Platform
+
+## What is the Microsoft Identity Platform?
+The Microsoft Identity Platform helps apps manage sign-ins and control access. It builds on Microsoft Entra ID as its foundation — Entra ID provides the core identity service, while the Identity Platform is the developer layer that lets apps prove identity and request access securely.
+
+## How It Works
+Supports two key standards:
+- **OAuth 2.0** – works like a permission slip; lets apps do only what you approve (e.g., reading your calendar).
+- **OpenID Connect** – adds identity verification, like showing an ID card, so the app knows it's you.
+
+Works with different account types: work/school, personal Microsoft accounts, and social logins.
+
+## Key Tools
+- **MSAL** – for handling tokens.
+- **App Registration** – for setting up apps.
+- **Microsoft Graph API** – to access users, groups, and other resources.
+
+## App Registration
+The first step to use Entra ID with an app is registration:
+- **Single-tenant** – only for your organization.
+- **Multi-tenant** – works with other organizations too.
+
+Registration creates two things behind the scenes: an **Application object** and a **Service principal**. You can then add secrets/certificates and configure scopes or branding.
+
+## Application Object
+The blueprint of an app (like a master design for a key). Created in the home tenant, where it lives permanently, and defines the rules for authentication and access.
+
+**Example (PeopleSphere):** When PeopleSphere builds an HR app, its Application object lives in their tenant.
+
+## Service Principal
+An instance of an application in a specific tenant — a working copy of the original "key," tailored for that tenant with its own assigned permissions. Each customer using the app gets their own Service principal in their tenant.
+
+**Example (DataCamp):** When DataCamp uses PeopleSphere's HR app, Azure creates a Service principal in DataCamp's tenant.
+
+### Types of Service Principals
+- **Application** – created through app registration; uses secrets or certificates.
+- **Managed Identity** – automatically managed by Azure; no secrets required.
+- **Legacy** – used by older applications.
+
+## Permissions
+Apps often need permission to access resources (calendars, contacts, etc.). OAuth 2.0 manages this using **scopes** — specific permission requests, like a permission slip (e.g., `Calendars.Read` = permission to view your calendar).
+
+### Types of Permissions
+- **Delegated permissions** – used when a signed-in user is involved (e.g., PeopleSphere schedules meetings for DataCamp users).
+- **App-only permissions** – for background apps running without a user (e.g., PeopleSphere automatically syncs employee records each night).
+
+Both permission types must be approved — this approval process is called **consent**.
+
+## Consent
+The user's or admin's approval that lets an app use specific permissions. Three main types:
+- **Static consent** – set up during app registration.
+- **Incremental consent** – allows an app to request additional permissions as needed.
+- **Admin consent** – required for higher-privilege permissions that affect the entire organization.

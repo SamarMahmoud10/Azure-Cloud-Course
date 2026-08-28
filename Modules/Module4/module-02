@@ -1,0 +1,51 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 2 of Module 4 -->
+
+# Video 2: Authentication and Authorization in Entra ID
+
+## What is Entra ID?
+Entra ID is Azure's service for managing identities and access. It controls who can sign in and what actions they're allowed to perform — for both people logging into apps and apps connecting to other services.
+
+**Example (PeopleSphere):** Employees sign in securely to view payslips, while HR staff access sensitive payroll data — all permissions managed centrally by Entra ID.
+
+## The Building Blocks of Entra ID
+Three core parts:
+- **Identity** – your digital fingerprint (e.g., username or email).
+- **Authentication** – proving who you are (password, multi-factor authentication).
+- **Authorization** – determines what actions you can take (view, edit, delete).
+
+## Key Concepts of Microsoft Entra ID
+- **Identity Management** – automates user accounts and monitors suspicious activity.
+- **Role-Based Access Control (RBAC)** – ensures users get the right level of access, no more, no less.
+- **Single Sign-On (SSO)** – sign in once to access multiple apps.
+- **Multi-Factor Authentication (MFA)** – adds a second verification step (fingerprint, one-time code).
+- **Reporting and Analytics** – tracks user activity and ensures compliance.
+
+## Users
+Individual identities in an organization:
+- **Internal users** – employees within the company.
+- **External users** – guest vendors needing temporary access.
+
+Entra ID tracks sign-ins, roles, group memberships, and devices for these users.
+
+**Example (PeopleSphere):** Employees are added as users to access payslips; auditors join as guest users during compliance reviews.
+
+## Groups
+Groups let you assign permissions to many users at once instead of individually:
+- **Security groups** – control access to resources.
+- **Microsoft 365 groups** – focus on collaboration and teamwork.
+
+**Example (PeopleSphere):** HR managers are in a security group for payroll access; Microsoft 365 Groups let HR and finance teams collaborate on payroll and reporting.
+
+## Devices
+Devices are registered to allow secure access. Entra ID can:
+- Enforce compliance policies
+- Monitor device health
+- Support hybrid identities (across cloud and on-premises environments)
+
+## Roles
+Roles define what users can do:
+- **Built-in roles** – e.g., Global Administrator, User Administrator.
+- **Custom roles** – created for specific needs.
+
+This ensures users only have the access they require.

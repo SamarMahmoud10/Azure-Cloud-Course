@@ -1,0 +1,43 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 5 of Module 4 -->
+
+# Video 5: Getting Started with Key Vault
+
+## Introduction
+Azure Key Vault is your app's secure vault for storing sensitive data like passwords and secrets, safely away from your code.
+
+## Risk of Hardcoding Secrets
+Hardcoding secrets in your app is like storing a password on a sticky note — quick, but risky. Secrets in code are hard to rotate, tough to track, and one copy-paste away from a breach.
+
+## The Fix: Azure Key Vault
+Key Vault gives you one secure place to store sensitive items, all protected and managed by Azure.
+
+## Why Use Key Vault?
+Built into Azure, scales effortlessly, and integrates smoothly with your apps and pipelines.
+
+## What Does Key Vault Store?
+Three important components: **Secrets**, **Certificates**, and **Keys**.
+
+### Secrets
+Things your app needs to connect or authenticate — API keys, passwords, connection strings. Instead of putting them in code, store them securely in Key Vault. They're encrypted, versioned, and only accessible to services that need them — a safer, cleaner way to manage credentials and rotate them when needed.
+
+**Example (PeopleSphere):** Keeps its payroll database password in Key Vault instead of hardcoding it, ensuring credentials are rotated and kept secure.
+
+### Certificates
+Act like ID cards for your app — they prove its identity and enable secure connections over HTTPS. Key Vault stores them safely and can even renew them automatically, especially when using integrated partners like DigiCert or GlobalSign (trusted certificate authorities that issue and validate digital certificates).
+
+**Example (PeopleSphere):** Stores certificates in Key Vault to secure connections between its HR portal and third-party payroll processors.
+
+### Keys
+Like the keys to your house — they lock and unlock access, ensuring only the right people get in. In Azure, they act as cryptographic tools your app can use to encrypt, decrypt, sign, and verify data. With Key Vault, keys never appear in your code — they stay secured in the vault, and Azure can automatically rotate them if a rotation policy is in place.
+
+**Example (PeopleSphere):** Protects the encryption keys used to secure employee records by storing them in Key Vault.
+
+## Key Vault Tiers and Storage Options
+Two options for storing secrets and keys, depending on security needs: **Standard Key Vault** and **Managed HSM Pools**.
+
+### Standard Key Vault
+Multi-tenant and ideal for most business scenarios (web apps, APIs, cloud configurations). Supports secrets, software-protected keys, and HSM-backed keys that are FIPS 140-2 Level 2 compliant. Pricing is mostly per operation.
+
+### Managed HSM Pools
+Dedicated, single-tenant hardware for maximum security. Only supports hardware-protected keys and meets the stricter FIPS 140-2 Level 3 standard — ideal for compliance-heavy workloads in finance, healthcare, or government. Pricing includes a fixed hourly cost plus usage fees.
