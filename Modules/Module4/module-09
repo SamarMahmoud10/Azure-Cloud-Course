@@ -1,0 +1,48 @@
+<!-- Module 4: Azure Security for Developers -->
+<!-- Video 9 of Module 4 -->
+
+# Video 9: Advanced Usage of Microsoft Graph
+
+## Overview
+This video introduces **pagination** and **batching** — concepts that make Microsoft Graph calls faster, lighter, and more efficient.
+
+## Pagination
+Analogy: moving groceries from your car in several trips instead of carrying everything at once. Pagination splits large results into smaller pages, making responses faster and preventing timeouts. In Microsoft Graph, when more results remain, a continuation link called `@odata.nextLink` points to the next batch until the final page is reached.
+
+**Example (PeopleSphere):** Fetching thousands of employee records — with pagination, data arrives in smaller pages, making it easier for the HR app to process.
+
+### Server-Side Pagination
+Graph returns its default number of items per page; the client doesn't need to specify a size. E.g., `GET /users` returns 100 results per page by default. If more exist, the response includes a continuation link to the next page.
+
+### Client-Side Pagination
+The client specifies how many items to return per page, set through query parameters:
+- `$top` – specifies the number of items per page.
+- `$skip` – sets an offset so results start after the first N items (not all endpoints support it). Token-based pagination with `nextLink` is usually more efficient for moving between pages.
+
+**Example:** An endpoint asking for groups with up to two items per page.
+
+## Batching
+Analogy: online shopping — instead of placing five separate orders, you add all five items to one cart and check out once, making one payment and getting one confirmation listing everything.
+
+In Graph, batching combines multiple API requests into a single HTTP call using the `$batch` endpoint. You send one payload and get one combined response — fewer trips and lower latency, ideal for dashboards. A single batch can include **up to 20 requests**.
+
+### Batch Request Endpoint
+Set the method to `POST` and call the `$batch` endpoint (instead of resource paths like `/users`).
+
+### Batch Request Body
+A JSON object with one top-level property: `"requests"` — an array which can take up to 20 items.
+
+### Request Items and Headers
+Each request item has three fields:
+- **id** – a unique label to match the response.
+- **method** – the HTTP method.
+- **url** – a relative path (e.g., `/users`).
+
+If a request has a body, include headers and set `Content-Type: application/json` so Graph can read it.
+
+## Batch Response
+At the top level, a `"responses"` array where each entry represents one request. Each entry includes four parts:
+- **id** – matches back to the original request.
+- **status** – the HTTP status for that request.
+- **headers** – carry extra metadata.
+- **body** – either the data or an error object.S
