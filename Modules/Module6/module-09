@@ -1,0 +1,29 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 9 of Module 6 -->
+
+# Video 9: Azure Resource Manager Overview
+
+## Infrastructure as Code Overview
+Analogy: an architectural blueprint for the cloud — instead of telling contractors what to do each day, you hand them a drawing and every wall, door, and outlet appears exactly as specified. Code, instead of being used inside a particular app, is used to define what services the app consists of and how each is configured.
+
+## IaC Deployment
+Once such code is written, running it automates the process of deploying an entire environment — no more deploying and configuring each service by hand.
+
+## Introduction to ARM Templates
+Multiple ways exist to do IaC in Azure. The original and oldest mechanism is **Azure Resource Manager (ARM) templates**: JSON that describes what to build, how to configure it, and in what order — allowing API Management and related services to be stood up the same way in dev, test, and prod. This enables repeatability and automation.
+
+## Creating ARM Templates
+New services can be templated from existing ones — like taking a snapshot of a building to recreate it elsewhere or keep it under version control. In the Azure Portal, opening an API Management instance and using the **Automation script** or **Export template** blade generates a template. The Portal gathers the current configuration (service settings, APIs, policies, connected pieces) and produces a downloadable JSON file plus a parameters file. Configuration and names can then be changed, and the services redeployed to a different environment.
+
+## ARM Template Structure
+The JSON inside an ARM template follows a specific structure, like a map:
+- **resources** – the main section, the "floor plan" itself, listing each thing to build (e.g., the API Management service and its child resources for APIs, products, and policies), each with a type, API version, and properties.
+
+Other sections make the template more flexible.
+
+## ARM Template Parameters and Variables
+- **Parameters** – the blank lines on a form, values filled in at deploy time (e.g., APIM name, location, SKU, publisher details).
+- **Variables** – a scratchpad of computed helpers that keep the template well-structured — e.g., concatenating environment names, building resource IDs, and removing unnecessary duplication, making the template easier to read and less error-prone if modified.
+
+## ARM Template Outputs
+**Outputs** (an optional section) are like a receipt taken home — useful values emitted after deployment, such as the gateway URL or resource IDs, so other scripts can chain work without guesswork.

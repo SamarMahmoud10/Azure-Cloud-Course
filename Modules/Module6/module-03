@@ -1,0 +1,35 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 3 of Module 6 -->
+
+# Video 3: Configuring API Authentication and Access
+
+## Importance of API Security
+Once API endpoints are built and exposed, it's important to ensure they are secure — nobody should be able to access or modify the data behind them, especially sensitive information like personal details, payment transactions, or company secrets.
+
+## Authentication Overview
+**Authentication** is the mechanism that forces the requester to prove they are who they say they are. Example: a user providing a username to access a web page is asked for a password to prove it's really them.
+
+## Authorization Overview
+**Authorization** ensures the user is allowed to access the resource they're trying to access. Being authenticated isn't enough to access an admin-only area of a website — you also need special admin permissions.
+
+## Weather App Example
+Any authenticated user should be able to retrieve or set their favorite city's weather. But only a user with special admin privileges should be able to configure app capabilities, such as which providers the app gets its data from.
+
+## Introduction to OAuth
+REST APIs often use **OAuth (Open Authorization)** as the protocol for both authentication and authorization. While not the only way to secure APIs, and not the easiest to master, it has a very high security rating compared to alternatives.
+
+## Google OAuth Example
+Logging into websites using Google or Facebook credentials, without previously registering, is how OAuth works — the trusted provider (Google/Facebook) tells the third-party website who you are without sharing sensitive details like your private password.
+
+## API Key Authorization in Azure Functions
+Authorization can sometimes be done without authentication. In Azure Functions, HTTP triggers can be secured using **function keys** — long, hard-to-memorize strings. Each function has a unique set of keys, including a default key generated on creation. One of these keys must be included in the request to the function's HTTP endpoint; without it, requests are denied. The client needs to know the right key but doesn't have to provide its own identity.
+
+## Different Scopes of API Keys
+- **Function-key** – specific to an individual function, like a physical key that unlocks a specific door.
+- **Host-level key** – can call any function within the application, like a master key that unlocks any door in the building.
+
+## API Management Authentication
+In Azure API Management, authentication is typically achieved by integrating with identity providers such as Entra ID (formerly Active Directory). Integration with authentication providers and protocols like OAuth is much more secure than using API keys, but also much more complex — like needing a passport and appropriate visa at an airport.
+
+## API Management Authorization Policies
+Authorization is implemented through **policies** in API Management that define rules for granting or restricting access to API endpoints — for example, restricting access based on user roles, ensuring only authorized clients can invoke specific APIs.

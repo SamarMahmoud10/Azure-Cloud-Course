@@ -1,0 +1,49 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 1 of Module 6 -->
+
+# Video 1: Introduction to API Management
+
+## REST API Overview
+**API** (Application Programming Interface) is a broad term for any interface that allows programs to communicate with each other without knowing each other's implementation details. **REST** (Representational State Transfer) is a software architectural style used to create web services that enable communication between different systems over the internet — for example, how an app on a mobile device or PC retrieves data from a server hosted on the web. Apps can not only retrieve data via a REST API but also manipulate it, using different HTTP methods for different operation types (GET, POST, DELETE, etc.).
+
+## REST Endpoint Types
+- **GET** – retrieving data.
+- **POST** – creating data.
+- **PUT** – updating data.
+- **DELETE** – removing data.
+
+## Endpoint Types: Weather App Example
+- **GET** – the app sends a request to the server to pull weather data for Paris.
+- **POST** – the user stores Paris as their favorite city.
+- **GET (repeated)** – every time the app opens, a new GET request updates the Paris weather data.
+- **PUT** – the user returns from a trip and updates their favorite location to London.
+- **DELETE** – two weeks later, the user removes London as their favorite city after getting tired of the bad weather data.
+
+## REST Principles
+Key principles include:
+- **Statelessness** – the server doesn't store client data between requests.
+- **Standard, human-readable formats** – like JSON or XML for data exchange.
+
+A web service adhering to these principles is said to follow the **RESTful architecture**. Example: the weather app makes a GET request to an API endpoint for weather data; the server responds with the requested data (typically JSON); the app doesn't store the data itself but makes a new GET request each time to get updated data.
+
+## Hosting REST APIs in Azure
+Several ways to host a REST API in Azure: custom web apps via App Services, Container Apps, Azure-specific Function Apps, and more. Any of these APIs can be managed by a service called **Azure API Management**.
+
+## Azure API Management (APIM) Overview
+Managing APIs gets complex as applications scale — securing APIs, monitoring performance, applying rate limits to prevent misuse. Azure API Management (APIM) helps do all of this effortlessly.
+
+## How APIM Operates
+Think of APIM as a **gateway** that sits between APIs and the clients consuming them. It provides a centralized way to:
+- Secure APIs using authentication and authorization.
+- Monitor API performance and usage.
+- Transform requests and responses.
+- Enforce policies like rate limits or caching.
+
+## Setting Up APIM
+Straightforward setup process:
+1. Create an API Management instance.
+2. Import APIs, whether hosted in Azure or elsewhere.
+3. Define policies, such as requiring an API key for access or limiting calls per minute.
+
+## APIs Supported by APIM
+Not limited to REST APIs — also supports other types like **WebSockets** and **gRPC**. A single APIM instance can manage multiple APIs of different types and from different sources.

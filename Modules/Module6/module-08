@@ -1,0 +1,25 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 8 of Module 6 -->
+
+# Video 8: Application Insights Overview
+
+## Importance of Observability
+Like switching on the cockpit instruments in a plane — an API might feel fine from the pilot seat, but Azure Monitor and Application Insights turn on the dials, gauges, and flight recorders so you can see the truth, not guess. The goal: link APIM and back-ends with a single thread of identity, visualize health on dashboards, and set alarms that alert before customers do.
+
+## Telemetry Types
+Measurements applications send to Application Insights are known as **telemetry**. Three kinds: **logging**, **tracing**, and **metrics**.
+
+### Logging
+Each event is written in human-readable language, with a severity level label making it clear whether the event was a normal expected action, an error, or a warning — like a secretary taking notes at a meeting and recording everything said, but for things happening inside a software application.
+
+### Tracing
+Multiple related log entries form a **trace**. Picture every request as a parcel with a tracking sticker: APIM attaches a unique tracking ID (a correlation ID) into the request headers. Back-ends instrumented with the Application Insights SDK automatically detect this header and include the ID in their own telemetry — this is how the platform stitches the full journey together.
+
+### Metrics
+An umbrella term for simple measurements — counters, average durations, etc. Like a car's speedometer, it always shows the current speed. Metrics can count errors, average request latency, number of current logged-in users, etc. Always measured against time series, so you can see what was happening when.
+
+## Application Insights Dashboards
+Dashboards act as a command center — a wall of monitors answering at a glance: "Are we fast, and are we failing?" In Azure Monitor Workbooks or the Azure Dashboard, charts for request count, error rate, and latency are pinned. Alert rules watch those charts or underlying logs and are wired to an Action Group so the right people get emails, Teams messages, or PagerDuty alerts when thresholds are crossed. Treat SLAs like speed limits: if p95 latency drifts past the line or the failure rate climbs, the alarm goes off before customers notice.
+
+## Kusto Query Language (KQL)
+When something seems off, **KQL** acts as the detective. Open Logs and query application telemetry like flipping through flight data recorders. With a few saved queries, you can jump from "alert fired" to "root cause" in minutes, then confirm the fix by watching the gauges settle back into the green.

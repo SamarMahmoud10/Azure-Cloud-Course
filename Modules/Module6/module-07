@@ -1,0 +1,36 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 7 of Module 6 -->
+
+# Video 7: API Versioning Strategy and Canary Releases
+
+## Introduction to API Versioning
+Analogy: a public railway. An existing track exists, and you want to build a new track covering the same route but with improvements.
+
+## API Versioning Fundamentals
+- **New version** – created when making breaking changes that would confuse riders on the old line (like building a new track). While building the new track, passengers can carry on using the old one.
+- **Revision** – a maintenance tune-up on the same line: fixing tracks, adding signage, smoothing the ride without changing where the train goes.
+
+In Azure API Management, versions live in a **version set**, while revisions let you edit safely, test, and then mark one as "current" when ready.
+
+## Version Signposting
+APIM supports three strategies for showing which "line" (version) to take:
+- **URL path versioning** – puts the version in the address (e.g., `/v2/orders`), clear like a street sign.
+- **Header versioning** – hides the version on the "ticket" (e.g., `Api-Version: 2`), keeping URLs clean but requiring clients to set headers correctly. Popular for programmatic clients since it keeps the resource URL clean and stable.
+- **Query-string versioning** – writes the version on the "envelope" (e.g., `?api-version=2`), very flexible and great for links or simple test scenarios.
+
+The scheme is chosen in the version set configuration and should stay consistent across the API family so developers don't get lost.
+
+## Version vs. Revision
+Besides creating new versions, updates can be made to the same API version — similar to improving an existing railway track without building a new one. Things improve, but no breaking changes are made. This process is known as creating a new **revision**.
+
+## Canary Releases
+Switching metaphors to the kitchen: a canary release is like serving a new recipe to a few tables before updating the whole menu. In APIM, a new revision is created, tested privately, then exposed to a limited audience (e.g., a pilot product or subset of callers), while everyone else stays on the current revision. A specific revision can even be targeted via a special URL containing the revision number — like letting testers ride the "maintenance track" without affecting the main line.
+
+When the new revision performs well, it's made current; if feedback is negative, it can be rolled back instantly by switching the previous revision back to current.
+
+## Key Concepts to Remember
+- When to use versions vs. revisions.
+- How to pick and configure a versioning scheme.
+- How to roll changes forward or back with minimal disruption.
+
+Mastering these tools means confidently evolving an API: keeping legacy riders on the old line, onboarding new riders to the new line, and performing "track maintenance" safely in between — all without requiring a service outage.

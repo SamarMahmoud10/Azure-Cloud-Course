@@ -1,0 +1,39 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 4 of Module 6 -->
+
+# Video 4: Implementing API Policies
+
+## The Challenge
+Securing, transforming, and controlling access to APIs without rewriting backend code for every new requirement — the answer lies in **APIM Policies**.
+
+## Introduction to API Policies
+Policies in APIM are like putting a bouncer at the door and speed-limit signs on the road for your APIs — they check who's allowed in, block trouble, and throttle heavy traffic so one user can't overwhelm the system. Anything going in and out of the API Gateway is controlled by policies.
+
+## API Management Policies Overview
+Policies are a set of powerful rules written in simple XML — think of them as a request-and-response pipeline. Rules can be inserted at different stages to shape traffic, without touching backend code at all.
+
+## Example: Backward Compatibility
+A new version of an API may require additional information that older versions of a mobile app don't provide. To still support older versions, API policies can add the missing information before the request reaches the backend.
+
+## Policy Scopes
+- **Global policies** – enforce organization-wide standards (e.g., a security rule applying to everything).
+- **API-level policies** – manage versioning for a specific product.
+- **Operation-level policies** – fine-grained control (e.g., caching only the "GET products" endpoint).
+
+## Inbound Policies
+Evaluated first when a request arrives from a client. Examples:
+- Making requests from old app versions compatible with the new API by augmenting payload data.
+- Guarding against malicious attempts by detecting malformed requests or missing data — an early guardrail preventing bad data from ever touching backend services.
+
+## Security and Throttling
+Inbound policies also handle security:
+- **validate-jwt policy** – checks a JSON Web Token (JWT), like a digital ID card sent with the request, confirming it's legitimate, hasn't expired, and was issued by a trusted source (e.g., Entra ID).
+- **Rate-limiting and quota policies** – throttle excessive clients, ensuring fair usage and protecting the backend from overload.
+
+## Outbound Policies
+Applied after the backend responds, allowing responses to be adjusted before returning to the client. Analogy — a restaurant: an order (request) goes to the kitchen (backend) where food is prepared, but before the dish reaches the customer, it passes through a final plating station where a chef might:
+- Remove something the customer doesn't want (e.g., stripping sensitive headers).
+- Add a label like "Keep Refrigerated" (a caching directive).
+- Change the presentation (e.g., converting XML to JSON).
+
+This ensures the response is exactly how the client expects it, even though it was processed differently on the backend.

@@ -1,0 +1,31 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 2 of Module 6 -->
+
+# Video 2: Anatomy of Azure API Management Service
+
+## Dealing with Different API Types
+A REST API built using an Azure Function is just one option — a Function App can contain more than one function, and a REST API can also be built in a standard server-hosted web application using any programming language. REST is also not the only type of API: others include **GraphQL** (fine-grained control over data queries) and **gRPC** (fast, performance-critical communication in binary format) — both rely on HTTP but serve different purposes.
+
+## Managing All APIs in One Place
+If there are many different APIs, **Azure API Management** provides a centralized way to manage them, applying consistent configuration and security policies for a high level of control at scale. Beyond centralization, it also helps identify performance bottlenecks, rate-limit incoming requests, and apply common security policies across all managed APIs.
+
+## API Types Supported
+API Management supports several API types: standard HTTP, WebSocket, GraphQL, gRPC, and more. APIs can also be connected based on published API documentation (e.g., OpenAPI, WSDL). Many APIs of different types can be connected to the same API Management instance, all managed centrally in one place.
+
+## Using API Gateway
+Once APIs are added to an API Management instance, all HTTP requests go through the **API Gateway** component. It acts as a mediator between the consumer and back-end services, applying:
+- Security measures
+- Rate limits
+- Request/response transformations
+- Protocol conversion (e.g., translating requests from HTTP to HTTPS)
+
+Because API Management acts as the public API gateway, the underlying APIs are no longer accessible directly by external clients.
+
+## Central Hub
+All public endpoints are now provided by API Management itself, acting like a central hub.
+
+## The Developer Portal
+A customizable, web-based interface that comes with Azure API Management (APIM). Its purpose is to provide customizable, publicly accessible user interfaces and documentation for the API endpoints managed by APIM (such as OpenAPI documentation).
+
+## Using the Developer Portal
+The Developer Portal can even publish documentation — meaning an organization can have a completely bespoke documentation web page for its public APIs.

@@ -1,0 +1,27 @@
+<!-- Module 6: Azure API Management -->
+<!-- Video 6 of Module 6 -->
+
+# Video 6: Response Caching and Usage Quotas
+
+## Overview
+How to make APIs fast and reliably available under load using caching and quotas: configuring response-caching policies, applying product-level quotas and spike-arrest patterns, and measuring key performance metrics like latency and cache hit ratios.
+
+## Setting Up Response Caching
+The purpose of response caching is to save a response from a particular endpoint so the request doesn't have to go to the endpoint every time. For popular endpoints returning the same data for many requests, caching that response means the backend doesn't have to work as hard and users get faster replies. Round trips to actual endpoints are more time-consuming and computationally expensive than retrieving a prepared response from cache — this is what APIM does via caching policies.
+
+## Configuring Response Caching
+In the portal or via policy XML, you specify:
+- A **cache duration**.
+- Whether to **vary by query string or headers**.
+- Where the cache lives — directly on the API Management gateway (the "edge," the entry point for all API traffic), or in an external cache such as **Redis**.
+
+Once enabled, repeated calls are served instantly from cache, dramatically reducing round-trip times.
+
+## Protecting Against Request Surges
+With caching in place, APIs also need protection from sudden surges. Too many clients accessing APIs at once can slow the system down, force overpaying for resource usage, or — in the worst case (like a distributed denial of service attack) — bring the system down.
+
+## How Usage Quotas Protect APIs
+**Quotas** enforce a fixed number of calls over a period, making them ideal for protecting against sudden spikes of requests. With quotas in place, it's harder to perform a denial of service attack or end up paying excessively for abnormal resource usage.
+
+## Measuring Resource Usage
+Application Insights integration can be enabled to track metrics like average latency and spot outliers. Example: if a "GET Products" call has a low cache hit ratio but high traffic, its cache duration might be increased from 5 minutes to 30 minutes to improve performance and reduce backend load. These insights help fine-tune cache durations, adjust quota thresholds, and optimize service tiers to balance cost and performance.
