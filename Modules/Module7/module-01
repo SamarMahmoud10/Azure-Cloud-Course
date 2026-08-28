@@ -1,0 +1,23 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 1 of Module 7 -->
+
+# Video 1: Azure Event Grid Overview
+
+## Event Grid & Event-Driven Architecture
+Core concepts of Event Grid, why event-driven architecture matters, and how this approach transforms application interaction. Event Grid can connect Azure Function apps (as both event source and event consumer), as well as other types of apps — other Azure services, external devices such as phones, sensors, and wearables. Event Grid facilitates communication between a wide range of services.
+
+## Event-Driven Architecture
+In an event-driven architecture, the system responds to events as they occur. Events are shared between independent services — an event emitted by one service triggers work in another. Each service typically acts as either an **event generator** (source) or an **event handler** (target). A message broker like Event Grid connects generators with handlers. Its efficient, scalable design supports real-time processing and immediate response.
+
+## Outsourcing Long-Running Tasks
+Event-driven architecture also speeds up applications by outsourcing long-running tasks to external services, so they run asynchronously and don't block the main thread. Example: accepting a job offer via a link — the application responds right away because it only made a small, fast database update recording the acceptance. Other processes (generating a contract, background checks, etc.) were outsourced to external services via Event Grid.
+
+## Case Study: Document Upload
+A banking app scenario: a customer applies for a loan; the loan agreement is issued by the bank and uploaded to the server using Azure Blob Storage.
+
+- When the document is uploaded, Event Grid triggers an event.
+- Two subscribers handle it, both implemented as Azure Functions: one sends a notification to the customer's device, the other logs the date and time of the upload in a database.
+- Thanks to Event Grid and an event-driven design, the customer sees the loan agreement is ready right away, and the bank records the event for future auditing.
+
+## Event Grid Overview
+Event Grid is an Azure service that enables real-time, event-driven communication between Azure services and external third-party components, by routing events to various destinations. Its architecture allows events to be processed quickly, is designed to be reliable, and automatically scales to handle more or fewer events as needed, without managing servers.

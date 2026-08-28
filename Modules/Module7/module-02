@@ -1,0 +1,26 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 2 of Module 7 -->
+
+# Video 2: Event Routing, Filtering, and System Events
+
+## MQTT Overview
+**MQTT (Message Queuing Telemetry Transport)** enables communication in Internet of Things setups, where multiple devices (like weather stations) continuously send measurements such as temperature and humidity. It's designed for low-bandwidth, high-latency, or unreliable networks — the kind often found with sensors placed outdoors or in obscure locations.
+
+## Event Filtering
+When Azure IoT Hub emits telemetry for many sensors, you might only want to process specific data — e.g., caring only about temperature readings from a particular device and ignoring everything else. This is achieved by applying filters when creating an Azure Event Grid subscription.
+
+## Event Filtering in Event Grid
+Event Grid provides powerful filtering so only relevant events reach subscribers. You can filter by subject, event type, or properties within the event data. Example: an image-processing service could filter for only JPEG or PNG files, ignoring everything else. Advanced filters allow comparisons like "greater than" or checks like "contains," giving granular control over what subscribers handle.
+
+## Event Routing
+Determines where sensor data goes. Event Grid uses a **publish-subscribe model**: event sources (e.g., Azure IoT Hub) publish events to Event Grid topics, and subscriptions define the destinations, ensuring each message reaches the right place — whether a data processing pipeline, an Azure Function, or a storage system. Without event routing, working with MQTT and receiving IoT device data wouldn't be possible.
+
+## System Events
+Predefined events emitted by Azure services, making it easier to build event-driven applications. Examples:
+- Azure Storage emits events like `BlobCreated` and `BlobDeleted`.
+- IoT Hub emits device lifecycle events, such as when a device connects or disconnects.
+
+Event Grid automatically creates system topics for these services — no need to manage those topics manually, just subscribe to the events of interest.
+
+## Recap
+MQTT helps IoT telemetry reach the cloud reliably. Event Grid's filtering lets you control exactly which events are processed. System events let you integrate seamlessly with Azure services.

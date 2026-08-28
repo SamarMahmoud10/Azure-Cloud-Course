@@ -1,0 +1,29 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 4 of Module 7 -->
+
+# Video 4: Queue Storage Overview
+
+## Introduction to Message Queues
+Covers how to create and configure a queue, use it for delayed or batched processing, trigger applications from queue messages, and explain how a message-based system differs from an event-based one.
+
+## Message Queues Overview
+Analogy: a to-do list for the cloud. When an app gets a spike of work (e.g., thousands of image uploads), you don't want to block users while processing each file. Instead, lightweight messages are dropped into Azure Queue Storage, and background workers process them at their own pace.
+
+## Queue Storage Overview
+The simplest way to set up message queues in Azure is via **Queue Storage**. Publishing and consuming applications connect to a specific message queue via its connection string. Messages are processed in the same order they were added to the queue.
+
+## Queue Triggers
+Each message from the queue is picked up by a **queue trigger**. Once processed successfully (the trigger runs to completion with no errors), it disappears from the queue so the next message can be processed. The trigger points at the queue via its connection string, and the associated code (function or method) keeps firing automatically as long as messages remain in the queue.
+
+## Error Handling
+If a queue trigger fails to process a message and returns an error, the message still disappears from the main queue — but doesn't just vanish. It goes into the **poison queue**, unblocking the main queue while the failed message can be processed later. Similar to a broken-down car being taken to a lay-by so it doesn't block the main highway.
+
+## Delaying and Batching
+- **Delaying** – Queue Storage supports scheduling messages by setting an initial invisibility delay when adding them to the queue (e.g., a follow-up email sent X hours after the original).
+- **Batching** – consumers can read multiple messages at once and process them together to improve throughput, allowing more data to be processed at once and speeding up the process.
+
+## Messages vs. Events
+- **Message-based workflow** (e.g., Queue Storage) – a message is a unit of work intended for a specific consumer. It's **pull-oriented**: workers retrieve messages and mark them complete when done.
+- **Event-based system** (e.g., Event Grid) – an event is a fact that something has happened. It's **push-oriented**: publishers raise events, and multiple handlers can react independently.
+
+Use queues for reliable background work, ordering within a partition, retries, and back-pressure. Use events to notify external services that something has happened.

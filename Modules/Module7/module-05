@@ -1,0 +1,24 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 5 of Module 7 -->
+
+# Video 5: Azure Service Bus Overview
+
+## Queue Storage vs. Service Bus
+**Queue Storage** is like a simple "to-do list" in the cloud — great for lightweight background work when strict ordering or advanced routing isn't needed. Each message can be processed only once.
+
+**Azure Service Bus** is the enterprise messenger — still like a "to-do list," but on steroids. It adds stronger delivery guarantees, richer routing, and coordination features for complex systems, and allows distributing the same message across multiple consumers.
+
+## Service Bus Queues
+Service Bus supports two messaging patterns: **queues** and **topics**. A queue is point-to-point — one producer sends messages, one consumer picks it up, and each message is processed once (similar to how Queue Storage works).
+
+## Service Bus Topics
+A topic uses the **publish-subscribe model**. Producers send messages to a topic, and multiple independent subscriptions each receive their own copy of the message. Each subscription can filter messages — e.g., finance, fraud detection, and analytics can all listen to the same stream but each get only what they care about. Conceptually, queues are like a single inbox, while topics are like mailing lists with per-subscriber rules.
+
+## Message Reliability
+Reliability is built into Service Bus. If a message can't be processed successfully on the first attempt, Service Bus retries automatically. After several retries, the message moves to a **dead-letter queue**. Unlike a simple poison queue, the dead-letter queue is reserved for messages that will not be processed, allowing examination of what went wrong.
+
+## Duplicate Detection
+Protects against double-processing. If a sender retries and the same message arrives again within a configured time window, Service Bus detects the duplicate (based on its ID) and discards it — conceptually a "seen this already" ledger, helping approach exactly-once behavior despite network retries.
+
+## Ordered Processing
+For ordered processing, Service Bus offers **Sessions**. Related messages are tagged with a Session ID (e.g., all updates for the same order). Service Bus delivers each session to only one consumer at a time, preserving per-session order and letting that consumer keep lightweight state across messages. Horizontal scaling is still possible by handling many sessions in parallel, while each individual session stays strictly ordered.

@@ -1,0 +1,35 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 3 of Module 7 -->
+
+# Video 3: Streaming Data Using Azure Event Hubs
+
+## Introduction to Event Hubs
+Analogy: a multi-lane motorway for data — millions of tiny cars (events) stream in, and multiple lanes (partitions) keep traffic flowing so different consumers can process data in parallel without jams. Common use case: app telemetry or website clickstreams feeding real-time dashboards and analytics.
+
+## Event Hubs Overview
+Azure Event Hubs is a fully managed, real-time data integration service, built for streaming large volumes of data (telemetry, logs, application events) — ideal for big-data scenarios and analytics pipelines.
+
+## Comparing Event Hubs to Event Grid
+Both work with events but serve different purposes:
+- **Event Grid** – powers event-driven architecture, where an event from one app triggers execution in another.
+- **Event Hubs** – focuses on collecting and streaming high-throughput event data for processing and analytics.
+
+## How Event Hubs Work at Scale
+Event Hubs can ingest millions of events per second, storing them temporarily in **partitions**. Downstream consumers, such as Azure Stream Analytics or Apache Spark, process these events for real-time analytics, visualization, or storage.
+
+Partitions enable high throughput by letting events be processed in parallel. If a consumer hits a transient failure, it can replay from an offset within the retention window — handy for apps running at scale.
+
+## Integrating Event Hubs with Event Grid
+Event Grid complements Event Hubs by enabling event-driven workflows. While Event Hubs streams data, Event Grid handles discrete events and can route them to an Event Hub when buffering and analytics are needed.
+
+### Why Route from Event Grid to Event Hubs?
+- Event Grid is about orchestration — triggering and routing discrete events — while Event Hubs is about durable, high-throughput ingestion for analysis.
+- Event Hubs integrates seamlessly with analytics services like Azure Stream Analytics, Databricks, or Kafka-compatible tools for real-time processing.
+- Event Hubs provides buffering so data isn't lost if a consumer is temporarily unavailable.
+
+## Connecting Event Hubs Consumers
+Target services receive data from an Event Hub by acting as consumers that read from partitions. To connect, a client needs the Event Hubs namespace, the Event Hub name, and an access key.
+
+## Advanced Event Hubs Features
+- **Checkpointing** – lets consumers resume from where they left off.
+- Events can be processed in **batches** for throughput, or handled **one by one** for low-latency scenarios.

@@ -1,0 +1,27 @@
+<!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
+<!-- Video 8 of Module 7 -->
+
+# Video 8: Event Capture, Scaling, and Partitions
+
+## Overview
+Advanced features of Event Hubs: archiving streams with Capture, scaling with throughput units and partitions (including auto-inflate), and how consumer groups, checkpointing, and geo-disaster recovery keep pipelines resilient.
+
+## Event Capture
+**Capture** is crucial for examining event data coming in. Event Hubs Capture automatically writes the incoming stream to Azure Blob Storage or Azure Data Lake Storage on a rolling schedule, writing event data into files (such as AVRO files). Data lands in storage in time- or size-based batches, providing a durable record for reprocessing, compliance, or offline analytics. Real-time consumers keep reading from Event Hubs as usual, while Capture creates a parallel "cold path" that's inexpensive to store and easy to query later.
+
+## Scaling Event Hubs
+Throughput comes from two levers:
+- **Throughput units** – control the overall throughput capacity of the Event Hub namespace (like the overall diameter of a pipe). The **auto-inflate** feature can adjust this capacity dynamically, saving costs when high throughput isn't needed.
+- **Partitions** – control parallelism and ordering scope. More partitions mean more concurrent consumers, but ordering is guaranteed only within a single partition key. Configured at the individual Event Hub level — equivalent to the number of pipes running in parallel.
+
+## Consumer Groups
+Give each downstream application an independent view of the stream — analytics, fraud detection, and archiving can all read the same events without stepping on each other's checkpoints.
+
+## Checkpointing
+Records how far a consumer has read. If a worker restarts, it resumes from the last checkpoint instead of replaying everything — extremely useful during a network outage while reading a long stream of events. With coordinated processors (like the Event Processor client), checkpoints are written periodically: frequent checkpoints reduce rework, less frequent ones reduce storage chatter.
+
+## Geo-Disaster Recovery
+Event Hubs lets you pair namespaces in different regions under a single alias. Producers and consumers talk to the alias; if the primary region goes down, the alias fails over to the secondary — protecting against a whole regional data center outage. Geo-DR is a **metadata-level failover** for business continuity, meaning historical data isn't replicated between regions. For long-term retention and cross-region analytics, Event Hubs Capture can write data into geo-redundant storage and/or replicate outputs downstream.
+
+## Putting It All Together
+Capture provides durable history; throughput units and partitions (plus auto-inflate) provide elastic scale; consumer groups and checkpointing provide clean, independent readers; and geo-DR keeps things running when a region goes down.
