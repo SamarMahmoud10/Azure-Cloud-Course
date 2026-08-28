@@ -1,71 +1,101 @@
-# ☁️ The Ultimate Azure Cloud Engineering & Development Track
+# AZ-204 Study Notes
 
-Welcome to my comprehensive study repository and documentation hub for mastering **Microsoft Azure Cloud Engineering & Development**. This repository serves as a structured, production-ready reference containing key architectural concepts, core takeaways, real-world analogies, and hands-on notes compiled module by module.
+Personal study notes and video summaries while preparing for the **Microsoft Azure Developer Associate (AZ-204)** certification. Each file summarizes one course video in plain, concise English — key concepts, terminology, and the running examples used in the course, without unnecessary padding.
 
-The core objective of this track is to build, deploy, optimize, secure, and monitor scalable cloud applications and data pipelines within the Microsoft Azure ecosystem.
+> **Note:** Modules 1–3 (App Services, Compute Solutions, Develop Azure Storage) are summarized separately in my own words/style and are not included in this repo.
 
----
+## Structure
 
-## 🗺️ Detailed Track Curriculum & Roadmap
+Each markdown file corresponds to a single video and is named:
 
-This track is divided into structured modules, moving from cloud fundamentals to advanced application development, data orchestration, and cloud architecture.
+```
+README-module<N>-video<N>.md
+```
 
-###  Module 1: Core Compute Solutions & Web Applications
-*   **Azure App Service & Web Apps**: Hosting scalable websites, APIs, and mobile back-ends without server management.
-*   **Deployment Methodologies**: Utilizing ZIP packages, FTP, and continuous integration via GitHub and Azure DevOps.
-*   **Configuration & Environment Settings**: Managing application settings, database connection strings, and secure runtime variables.
-*   **Scaling & Resiliency**: Implementing Vertical Scaling (Scale Up) and Horizontal Scaling (Scale Out/Autoscaling based on CPU/traffic).
-*   **Troubleshooting & Monitoring**: Diagnostic logging and performance auditing using Azure Monitor and Application Insights.
-
-###  Module 2: Serverless Architecture & Event-Driven Apps
-*   **Azure Functions**: Building cost-effective, serverless, and event-driven computing blocks.
-*   **Triggers and Bindings**: Connecting functions seamlessly to storage, queues, and HTTP requests without writing boilerplate integration code.
-*   **Durable Functions**: Writing stateful serverless workflows, managing long-running orchestrations, and implementing patterns like Fan-out/Fan-in.
-
-### 🐋 Module 3: Containerization & Microservices
-*   **Azure Container Registry (ACR)**: Managing and securing private Docker container images in the cloud.
-*   **Azure Container Instances (ACI)**: Deploying isolated, fast-booting containers instantly without orchestrator overhead.
-*   **Azure Container Apps**: Building serverless microservices with built-in scaling, revision tracking, and traffic splitting.
-
-###  Module 4: Cloud Data, Storage, and Databases
-*   **Azure Blob Storage**: Storing unstructured big data (images, videos, deployment packages) with tiering (Hot, Cool, Archive) and lifecycle rules.
-*   **Azure Cosmos DB**: Designing globally distributed, multi-model NoSQL databases with low latency.
-*   **Azure SQL Database**: Managing fully managed, relational databases with built-in backup, high availability, and performance tuning.
-*   **Data Security**: Securing data at rest and in transit using Shared Access Signatures (SAS) and managed keys.
-
-###  Module 5: Cloud Security, Identity, and Governance
-*   **Microsoft Entra ID (Formerly Azure AD)**: Implementing cloud identity management, user authentication, and single sign-on (SSO).
-*   **Role-Based Access Control (RBAC)**: Enforcing the principle of least privilege across cloud resources using identity roles.
-*   **Azure Key Vault**: Centralizing and securing cryptographic keys, application secrets, certificates, and database credentials.
-*   **Managed Identities**: Allowing Azure resources to securely authenticate with each other without hardcoding credentials in files.
-
-###  Module 6: Caching, Content Delivery, and Performance
-*   **Azure Cache for Redis**: Deploying high-throughput, low-latency in-memory data caches to accelerate database query response times.
-*   **Azure Content Delivery Network (CDN)**: Caching static web assets at global edge locations to minimize latency for global end-users.
-
-###  Module 7: Cloud Integration, Messaging, and DevOps Pipelines
-*   **Azure Service Bus**: Implementing enterprise message queuing and publish/subscribe patterns for asynchronous microservice communication.
-*   **Azure Event Grid & Event Hubs**: Orchestrating massive event ingestion pipelines and reactive cloud architectures.
-*   **Infrastructure as Code (IaC) & CI/CD**: Automating infrastructure provisioning and code deployment workflows securely.
+(Module 4 files are simply named `README-video<N>.md`.)
 
 ---
 
-##  Explored Azure Services Dashboard
+## 📘 Module 4 — Azure Security for Developers
 
-| Category | Services Covered |
-| :--- | :--- |
-| **Compute & Serverless** | Azure App Service, Azure Functions, Container Apps, ACI |
-| **Data & Databases** | Blob Storage, Azure SQL, Azure Cosmos DB, Cache for Redis |
-| **Security & Identity** | Microsoft Entra ID, Azure Key Vault, RBAC, Managed Identities |
-| **Integration & Messaging** | Service Bus, Event Grid, Event Hubs |
-| **DevOps & Operations** | Azure Portal, Azure CLI, Azure Monitor, Application Insights |
+| # | Video | File |
+|---|-------|------|
+| 1 | Introduction to Azure Security | [README-video1.md](./README-video1.md) |
+| 2 | Authentication and Authorization in Entra ID | [README-video2.md](./README-video2.md) |
+| 3 | Microsoft Identity Platform | [README-video3.md](./README-video3.md) |
+| 4 | Azure App Configuration | [README-video4.md](./README-video4.md) |
+| 5 | Getting Started with Key Vault | [README-video5.md](./README-video5.md) |
+| 6 | Advanced Key Vault Settings | [README-video6.md](./README-video6.md) |
+| 7 | Secure Access with Managed Identities | [README-video7.md](./README-video7.md) |
+| 8 | Introduction to Microsoft Graph | [README-video8.md](./README-video8.md) |
+| 9 | Advanced Usage of Microsoft Graph | [README-video9.md](./README-video9.md) |
+
+**Topics covered:** Entra ID (identity, authentication, authorization, users/groups/roles), the Microsoft Identity Platform (OAuth 2.0, OpenID Connect, app registration, service principals, permissions & consent), Azure App Configuration (key-value settings, feature flags, security options), Azure Key Vault (secrets/certificates/keys, RBAC vs access policies, soft delete, purge protection), Managed Identities (system-assigned vs user-assigned), and Microsoft Graph (API structure, pagination, batching).
 
 ---
 
-##  About this Repository
+## 📗 Module 5 — Monitor and Troubleshoot Azure Solutions
 
-This repository is a live documentation project updated continuously as I progress through the full multi-module cloud track. Each module's folder contains detailed notes designed to translate dense cloud-architectural concepts into intuitive, real-world examples. 
+| # | Video | File |
+|---|-------|------|
+| 1 | Introduction to Azure Monitor | [README-module5-video1.md](./README-module5-video1.md) |
+| 2 | Collecting and Viewing Metrics | [README-module5-video2.md](./README-module5-video2.md) |
+| 3 | Automated Monitoring with Alerts | [README-module5-video3.md](./README-module5-video3.md) |
+| 4 | Exploring Application Insights | [README-module5-video4.md](./README-module5-video4.md) |
+| 5 | Availability Tests | [README-module5-video5.md](./README-module5-video5.md) |
+| 6 | Exploring Log Analytics | [README-module5-video6.md](./README-module5-video6.md) |
+| 7 | Instrumenting an App for Monitoring | [README-module5-video7.md](./README-module5-video7.md) |
+| 8 | Application Map | [README-module5-video8.md](./README-module5-video8.md) |
+| 9 | Optimizing Performance | [README-module5-video9.md](./README-module5-video9.md) |
 
-Whether you are a developer looking to deploy your first cloud app, or an engineer studying for enterprise-level cloud certifications, this repository serves as a highly scannable, practical reference hub.
+**Topics covered:** Azure Monitor fundamentals (metrics, logs, alerts, dashboards), Metrics Explorer, alert rules & action groups, Application Insights (telemetry, distributed tracing, live metrics), availability tests (ping/standard/custom), Log Analytics workspaces & KQL, app instrumentation (auto vs manual), Application Map, and performance optimization (caching, Redis, throttling, async patterns).
 
-*If you find these notes valuable, feel free to give this repository a star 🌟 to support the journey!*
+---
+
+## 📙 Module 6 — Azure API Management
+
+| # | Video | File |
+|---|-------|------|
+| 1 | Introduction to API Management | [README-module6-video1.md](./README-module6-video1.md) |
+| 2 | Anatomy of Azure API Management Service | [README-module6-video2.md](./README-module6-video2.md) |
+| 3 | Configuring API Authentication and Access | [README-module6-video3.md](./README-module6-video3.md) |
+| 4 | Implementing API Policies | [README-module6-video4.md](./README-module6-video4.md) |
+| 5 | Authentication and Authorization Using Entra ID | [README-module6-video5.md](./README-module6-video5.md) |
+| 6 | Response Caching and Usage Quotas | [README-module6-video6.md](./README-module6-video6.md) |
+| 7 | API Versioning Strategy and Canary Releases | [README-module6-video7.md](./README-module6-video7.md) |
+| 8 | Application Insights Overview (APIM Observability) | [README-module6-video8.md](./README-module6-video8.md) |
+| 9 | Azure Resource Manager Overview | [README-module6-video9.md](./README-module6-video9.md) |
+
+**Topics covered:** REST API fundamentals, APIM architecture (gateway, developer portal), authentication/authorization (OAuth, API keys, Entra ID integration), inbound/outbound policies, response caching & quotas, API versioning & canary releases (revisions vs versions), observability with Application Insights & KQL, and Infrastructure as Code with ARM templates.
+
+---
+
+## 📕 Module 7 — Develop Azure Event-based and Message-based Solutions
+
+| # | Video | File |
+|---|-------|------|
+| 1 | Azure Event Grid Overview | [README-module7-video1.md](./README-module7-video1.md) |
+| 2 | Event Routing, Filtering, and System Events | [README-module7-video2.md](./README-module7-video2.md) |
+| 3 | Streaming Data Using Azure Event Hubs | [README-module7-video3.md](./README-module7-video3.md) |
+| 4 | Queue Storage Overview | [README-module7-video4.md](./README-module7-video4.md) |
+| 5 | Azure Service Bus Overview | [README-module7-video5.md](./README-module7-video5.md) |
+| 6 | Sessions, Auto-Forwarding, and Partitions (Service Bus) | [README-module7-video6.md](./README-module7-video6.md) |
+| 7 | Custom Topics, Filtering, and Retries (Event Grid) | [README-module7-video7.md](./README-module7-video7.md) |
+| 8 | Event Capture, Scaling, and Partitions (Event Hubs) | [README-module7-video8.md](./README-module7-video8.md) |
+
+**Topics covered:** Event-driven architecture, Event Grid (routing, filtering, system events, domains, dead-lettering, retries), Event Hubs (partitions, throughput units, consumer groups, checkpointing, Capture, geo-DR), Queue Storage (queue triggers, poison queue, delay/batching), and Service Bus (queues vs topics, sessions, duplicate detection, dead-lettering, partitioning).
+
+---
+
+## Quick Concept Map
+
+```
+Security & Identity        →  Module 4 (Entra ID, Identity Platform, Key Vault, Managed Identities, Graph)
+Observability              →  Module 5 (Azure Monitor, App Insights, Log Analytics, Alerts)
+API Exposure & Governance  →  Module 6 (API Management, policies, versioning, ARM)
+Async Communication        →  Module 7 (Event Grid, Event Hubs, Queue Storage, Service Bus)
+```
+
+---
+
+*These notes are personal study summaries created while working through an AZ-204 prep course. They are condensed for quick review and are not a verbatim transcript of the course material.*
