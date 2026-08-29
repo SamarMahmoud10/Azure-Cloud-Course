@@ -1,7 +1,5 @@
 <!-- Module 4: Azure Security for Developers -->
-<!-- Video 8 of Module 4 -->
-
-# Video 8: Introduction to Microsoft Graph
+ Introduction to Microsoft Graph
 
 ## What is Microsoft Graph?
 Microsoft Graph is a unified API to access Microsoft 365 data — things like your calendar, emails, files, and even your manager's name, all the information stored across Outlook, Teams, OneDrive, and Entra ID. Instead of connecting to each service separately, you use one endpoint. It simplifies development with a single authentication flow and SDK.
