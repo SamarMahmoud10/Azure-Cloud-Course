@@ -1,7 +1,5 @@
 <!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
-<!-- Video 1 of Module 7 -->
-
-# Video 1: Azure Event Grid Overview
+ Azure Event Grid Overview
 
 ## Event Grid & Event-Driven Architecture
 Core concepts of Event Grid, why event-driven architecture matters, and how this approach transforms application interaction. Event Grid can connect Azure Function apps (as both event source and event consumer), as well as other types of apps — other Azure services, external devices such as phones, sensors, and wearables. Event Grid facilitates communication between a wide range of services.
