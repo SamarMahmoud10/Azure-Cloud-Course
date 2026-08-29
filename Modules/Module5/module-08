@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 8 of Module 5 -->
-
-# Video 8: Application Map
+ Application Map
 
 ## When Troubleshooting Gets Messy
 Modern cloud apps aren't a single box anymore — they're a web of services, APIs, databases, and external dependencies. When something breaks, the hardest part isn't fixing it, it's figuring out where the problem actually is.
