@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 6 of Module 5 -->
-
-# Video 6: Exploring Log Analytics
+ Exploring Log Analytics
 
 ## Logs Everywhere
 Every Azure service generates logs — activity logs, metrics, diagnostics. But when those logs live in different places, troubleshooting becomes guesswork, wasting time jumping between tools trying to piece together what happened.
