@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 9 of Module 5 -->
-
-# Video 9: Optimizing Performance
+ Optimizing Performance
 
 ## Performance Is a Feature
 Performance isn't just about speed — it's about user trust. Slow applications lose users, increase costs, and amplify failures under load. Focus here: how Azure developers optimize applications for low latency and high traffic at scale.
