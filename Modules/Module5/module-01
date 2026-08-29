@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 1 of Module 5 -->
-
-# Video 1: Introduction to Azure Monitor
+ Introduction to Azure Monitor
 
 ## The Cost of Flying Blind
 Scenario: a web application serving thousands of customers starts throwing errors at 2 AM on a Saturday. Users can't complete purchases. By the time someone notices Monday morning, a weekend's worth of revenue is lost, along with frustrated loyal customers.
