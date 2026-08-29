@@ -1,31 +1,21 @@
 <!-- Module 7: Develop Azure Event-based and Message-based Solutions -->
- Custom Topics, Filtering, and Retries
 
-## Overview
-Going beyond the basics of Azure Event Grid: organizing large publisher scenarios with Domains, cutting noise with advanced filters, protecting with dead-lettering, and tuning retry behavior.
+ Sessions, Auto-Forwarding, and Partitions
 
-## Event Grid Domains
-For systems with many different types of clients (mobile apps across countries, IoT devices, servers, etc.) all emitting events, **Event Grid Domains** help manage the complexity.
+## Session Overview
+Sometimes messages need to be delivered in order — e.g., items must be added to a user's shopping cart in the same order as added, otherwise the user would think the system is broken. That's what **sessions** are for.
 
-## Domain vs. Custom Topic
-- **Domain** – gives a publisher a single, centralized surface to manage many isolated domain topics, often per app, team, or tenant. Access can be delegated per domain topic, role-based control applied, and each consumer's subscriptions kept cleanly separated.
-- **Custom topic** – a standalone topic created for a single publisher scenario.
+## Sessions Overview
+This feature gives per-key ordering. Related messages are tagged with a **Session ID** (e.g., all updates for the same order). Service Bus delivers one session to exactly one consumer at a time, keeping those messages in sequence. While processing a session, the consumer can keep lightweight state and resume exactly where it left off if the worker restarts. The result: clean, per-customer first-in-first-out processing without sacrificing horizontal scale across many concurrent sessions.
 
-Use a Domain when thousands of logically isolated topics under one roof with clear ownership boundaries are needed; use a custom topic when one app publishes to a small set of consumers.
+## Dead-Lettering and Auto-Forwarding
+When a message can't be completed (e.g., it exceeded its delivery count or couldn't be parsed), Service Bus moves it to the **dead-letter queue** — keeping the main path unblocked and the backlog healthy. **Auto-forwarding** lets you pipe dead-lettered messages to a separate queue or a topic subscription — fanning problem messages out to a diagnostics flow, capturing them for audit, or triggering a retry queue for reprocessing, without adding custom rerouting code to primary consumers.
 
-## Advanced Filtering
-Filters let you deliver only what subscribers care about:
-- **Subject prefix/suffix filters** – great for path-like subjects (e.g., a `/sales/` path filter, or a `.jpg` filter so an image-processing system doesn't receive non-image files).
-- **Event type filters** and **filters on properties inside event data**.
-- Advanced filters support comparisons like "greater than," "less than," and "contains," keeping only high-value events.
+## Duplicate Detection
+Network connections can break, causing clients to time out and resend a message — doing the work twice could be problematic (e.g., you don't want to be double-charged). Enabling **duplicate detection** with a time window helps: each message carries an ID, and if Service Bus sees the same ID again within that window, it discards the duplicate — ensuring the message is processed once, even when the network isn't cooperating.
 
-Multiple filters are combined with logical AND, giving precise control without custom code.
+## Partitions for High Throughput
+**Partitioning** improves availability and throughput. A partitioned queue or topic spreads messages across multiple brokers under the hood, so several flows of messages are processed in parallel — like having multiple lanes on a highway instead of just one. This also improves resiliency: one node can fail without taking the entity down. Consumers still use the same API and connection string — Service Bus manages the distribution behind the scenes.
 
-## Dead-Lettering in Event Grid
-Like Service Bus, Event Grid has dead-lettering as a safety net. If Event Grid can't get a success response from the destination after exhausting retries, it writes the undelivered event to a dead-letter storage container, along with context about why delivery failed — keeping the happy path clear, providing an audit trail, and allowing inspection and replay later via a separate recovery workflow.
-
-## Retries and Back-Offs
-Event Grid uses **exponential back-off** to deliver events, where the gap between retries increases with the number of retries. On each event subscription, the retry policy can be tuned — e.g., maximum delivery attempts and total time to live (TTL). Short-lived signals might use a smaller TTL to avoid stale processing; critical business events might tolerate more attempts to ride out transient failures. Values should match the consequence of late or missed delivery.
-
-## Delivery Guarantees
-Event Grid provides **at-least-once delivery**: duplicates are possible, and global ordering isn't guaranteed. These semantics are the same for system events and custom events — the difference isn't in the guarantee, but in who owns the publisher: with system events, Azure produces the facts; with custom events, you do. It's up to you to handle any deduplication.
+## Putting It All Together
+A robust pattern combines: **sessions** to preserve order where it matters, **dead-lettering plus auto-forwarding** to quarantine and route problem messages, **duplicate detection** to prevent rework, and **partitioning** to keep the whole system fast and highly available.
