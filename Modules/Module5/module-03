@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 3 of Module 5 -->
-
-# Video 3: Automated Monitoring with Alerts
+ Automated Monitoring with Alerts
 
 ## Why Alerts?
 Constantly watching dashboards is like sitting in front of security cameras all day — not practical. What you need is a smart alarm system that watches for you. That's exactly what Azure Monitor alerts do.
