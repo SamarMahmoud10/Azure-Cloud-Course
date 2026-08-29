@@ -1,7 +1,5 @@
 <!-- Module 4: Azure Security for Developers -->
-<!-- Video 3 of Module 4 -->
-
-# Video 3: Microsoft Identity Platform
+ Microsoft Identity Platform
 
 ## What is the Microsoft Identity Platform?
 The Microsoft Identity Platform helps apps manage sign-ins and control access. It builds on Microsoft Entra ID as its foundation — Entra ID provides the core identity service, while the Identity Platform is the developer layer that lets apps prove identity and request access securely.
