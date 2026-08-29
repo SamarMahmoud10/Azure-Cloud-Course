@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 5 of Module 5 -->
-
-# Video 5: Availability Tests
+ Availability Tests
 
 ## Is My App Up?
 Refreshing a website repeatedly to check if it's working is a familiar habit — but in cloud systems, waiting for customers to report outages is too late. You need a way to know your app is down before they do.
