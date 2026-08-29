@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 4 of Module 5 -->
-
-# Video 4: Exploring Application Insights
+ Exploring Application Insights
 
 ## The Problem
 Trying to understand what's happening inside an application by scrolling through endless logs is slow, repetitive, and frustrating. What's needed is a tool that collects data, spots issues, and gives clarity instantly — that's exactly what Azure Application Insights does.
