@@ -1,7 +1,5 @@
 <!-- Module 5: Monitor and Troubleshooting Azure Solutions -->
-<!-- Video 2 of Module 5 -->
-
-# Video 2: Collecting and Viewing Metrics
+ Collecting and Viewing Metrics
 
 ## Metrics Recap
 Metrics are like a cloud application's vital signs — real-time, numerical data about a resource's performance and health. Think of them as a continuous heartbeat monitor for storage accounts, virtual machines, databases, and other services.
